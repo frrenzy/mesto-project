@@ -1,0 +1,10 @@
+.profile__edit {
+  display: block;
+  width: 24px;
+  height: 24px;
+  background-image: url(../../../images/edit.svg);
+  margin: 0 0 9px 18px;
+  justify-self: start;
+  align-self: end;
+  box-sizing: border-box;
+}

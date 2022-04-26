@@ -9,6 +9,11 @@
 
 @import "../blocks/main/main.css";
 @import "../blocks/profile/profile.css";
+@import "../blocks/profile/__pic/profile__pic.css";
+@import "../blocks/profile/__name/profile__name.css";
+@import "../blocks/profile/__description/profile__description.css";
+@import "../blocks/profile/__edit/profile__edit.css";
+@import "../blocks/profile/__add/profile__add.css";
 
 @import "../blocks/pics/pics.css";
 

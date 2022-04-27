@@ -1,0 +1,6 @@
+.pics__title {
+  margin: 21px 15px 31px 21px;
+  display: flex;
+  justify-content: space-between;
+  line-height: 0;
+}

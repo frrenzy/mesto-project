@@ -17,6 +17,12 @@
 @import "../blocks/profile/__add/profile__add.css";
 
 @import "../blocks/pics/pics.css";
+@import "../blocks/pics/__grid/pics__grid.css";
+@import "../blocks/pics/__grid-item/pics__grid-item.css";
+@import "../blocks/pics/__pic/pics__pic.css";
+@import "../blocks/pics/__title/pics__title.css";
+@import "../blocks/pics/__pic-name/pics__pic-name.css";
+@import "../blocks/pics/__like/pics__like.css";
 
 @import "../blocks/footer/footer.css";
 @import "../blocks/footer/__copyright/footer__copyright.css";

@@ -11,6 +11,8 @@
   grid-column: 3 / 4;
   justify-self: center;
   align-self: center;
+  background-color: #000;
+  padding: 0;
 }
 
 @media screen and (max-width: 767px) {

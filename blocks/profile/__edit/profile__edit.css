@@ -8,6 +8,9 @@
   justify-self: start;
   align-self: end;
   box-sizing: border-box;
+  background-color: #000;
+  padding: 0;
+  border: none;
 }
 
 @media screen and (max-width: 767px) {

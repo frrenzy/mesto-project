@@ -11,3 +11,12 @@
   justify-self: start;
   align-self: end;
 }
+
+@media screen and (max-width: 767px) {
+  .profile__name {
+    display: inline-block;
+    font-size: 27px;
+    line-height: 33px;
+    justify-self: flex-start;
+  }
+}

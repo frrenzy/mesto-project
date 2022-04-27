@@ -1,6 +1,15 @@
 .pics {
-  width: 100%;
+  width: calc(100% - 38px);
   max-width: 880px;
   margin: 0;
   padding: 0 0 66px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media screen and (max-width: 767px) {
+  .pics {
+    padding-bottom: 48px;
+  }
 }

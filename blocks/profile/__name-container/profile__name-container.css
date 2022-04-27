@@ -1,0 +1,13 @@
+.profile__name-container {
+  display: flex;
+  line-height: 0;
+}
+
+@media screen and (max-width: 767px) {
+  .profile__name-container {
+    width: 100%;
+    justify-content: center;
+    padding-left: 28px;
+    margin-bottom: 7px;
+  }
+}

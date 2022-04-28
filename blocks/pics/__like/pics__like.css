@@ -7,3 +7,7 @@
   border: none;
   background-color: #fff;
 }
+
+.pics__like:hover {
+  opacity: .5;
+}

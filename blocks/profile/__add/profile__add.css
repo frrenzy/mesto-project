@@ -11,7 +11,7 @@
   grid-column: 3 / 4;
   justify-self: center;
   align-self: center;
-  background-color: #000;
+  background-color: rgba(0, 0, 0, 0);
   padding: 0;
 }
 

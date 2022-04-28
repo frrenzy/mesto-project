@@ -1,8 +1,8 @@
 .pics__grid-item {
   width: 282px;
-  height: 361px;
   background: #FFFFFF;
   border-radius: 10px;
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }

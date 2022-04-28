@@ -1,16 +1,17 @@
 .header {
   width: 100%;
   max-width: 880px;
-  height: 74px;
+  padding: 0 0 40px;
   display: flex;
   align-items: start;
   justify-content: start;
   border-bottom: 1px solid #545454;
+  border-bottom: 1px solid rgba(84, 84, 84, .7);
   box-sizing: border-box;
 }
 
 @media screen and (max-width: 1023px) {
   .header {
-    height: 56px;
+    padding-bottom: 32px;
   }
 }

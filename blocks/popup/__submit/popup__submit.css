@@ -12,6 +12,11 @@
   line-height: 22px;
   text-align: center;
   color: #FFFFFF;
+  border-radius: 2px;
+}
+
+.popup__submit:hover {
+  opacity: .5;
 }
 
 @media screen and (max-width: 767px) {

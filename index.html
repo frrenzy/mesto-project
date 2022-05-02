@@ -184,16 +184,16 @@
 
 
     for (let likeButton of likeButtons) {
-      likeButton.addEventListener(`click`, (e) => {
+      likeButton.addEventListener(`click`, () => {
         likeButton.classList.toggle(`pics__like_active`)
       })
     }
 
-    editButton.addEventListener(`click`, (e) => {
+    editButton.addEventListener(`click`, () => {
       popup.classList.add(`popup_opened`)
     })
 
-    closeButton.addEventListener(`click`, (e) => {
+    closeButton.addEventListener(`click`, () => {
       popup.classList.remove(`popup_opened`)
     })
   </script>

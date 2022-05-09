@@ -7,6 +7,5 @@
   row-gap: 20px;
   column-gap: 17px;
   grid-auto-flow: dense;
-  grid-template-columns: repeat(auto-fit, minmax(282px, max-content));
-  /*grid-template-rows: repeat(auto-fit, 361px);*/
+  grid-template-columns: repeat(auto-fit, 282px);
 }

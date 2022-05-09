@@ -176,14 +176,14 @@
   </div>
 
   <script>
-    let likeButtons = document.querySelectorAll(`.pics__like`)
-    let editButton = document.querySelector(`.profile__edit`)
-    let closeButton = document.querySelector(`.popup__close`)
+    const likeButtons = document.querySelectorAll(`.pics__like`)
+    const editButton = document.querySelector(`.profile__edit`)
+    const closeButton = document.querySelector(`.popup__close`)
 
-    let popup = document.querySelector(`.popup`)
+    const popup = document.querySelector(`.popup`)
 
 
-    for (let likeButton of likeButtons) {
+    for (const likeButton of likeButtons) {
       likeButton.addEventListener(`click`, () => {
         likeButton.classList.toggle(`pics__like_active`)
       })

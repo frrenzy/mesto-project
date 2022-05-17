@@ -44,98 +44,8 @@
       </section>
 
       <section class="pics">
-        <ul class="pics__grid">
-          <li>
-            <figure class="pics__grid-item">
-              <img src="./images/places/bogdo.jpeg"
-                   alt="Гора Большой Богдо"
-                   class="pics__pic"
-              >
-              <figcaption class="pics__title">
-                <h2 class="pics__pic-name">Гора Большой Богдо</h2>
-                <button type="button"
-                        class="pics__like button"
-                        aria-label="Поставить лайк"
-                ></button>
-              </figcaption>
-            </figure>
-          </li>
-          <li>
-            <figure class="pics__grid-item">
-              <img src="./images/places/elton.jpeg"
-                   alt="Озеро Эльтон"
-                   class="pics__pic"
-              >
-              <figcaption class="pics__title">
-                <h2 class="pics__pic-name">Озеро Эльтон</h2>
-                <button type="button"
-                        class="pics__like button"
-                        aria-label="Поставить лайк"
-                ></button>
-              </figcaption>
-            </figure>
-          </li>
-          <li>
-            <figure class="pics__grid-item">
-              <img src="./images/places/london.jpeg"
-                   alt="Озеро Джека Лондона"
-                   class="pics__pic"
-              >
-              <figcaption class="pics__title">
-                <h2 class="pics__pic-name">Озеро Джека Лондона</h2>
-                <button type="button"
-                        class="pics__like button"
-                        aria-label="Поставить лайк"
-                ></button>
-              </figcaption>
-            </figure>
-          </li>
-          <li>
-            <figure class="pics__grid-item">
-              <img src="./images/places/onekotan.jpg"
-                   alt="Вулкан Креницына"
-                   class="pics__pic"
-              >
-              <figcaption class="pics__title">
-                <h2 class="pics__pic-name">Вулкан Креницына</h2>
-                <button type="button"
-                        class="pics__like button"
-                        aria-label="Поставить лайк"
-                ></button>
-              </figcaption>
-            </figure>
-          </li>
-          <li>
-            <figure class="pics__grid-item">
-              <img src="./images/places/ordin.jpeg"
-                   alt="Ординская пещера"
-                   class="pics__pic"
-              >
-              <figcaption class="pics__title">
-                <h2 class="pics__pic-name">Ординская пещера</h2>
-                <button type="button"
-                        class="pics__like button pics__like_active"
-                        aria-label="Поставить лайк"
-                ></button>
-              </figcaption>
-            </figure>
-          </li>
-          <li>
-            <figure class="pics__grid-item">
-              <img src="./images/places/sayany.jpeg"
-                   alt="Саяно-Шушенская ГЭС"
-                   class="pics__pic"
-              >
-              <figcaption class="pics__title">
-                <h2 class="pics__pic-name">Саяно-Шушенская ГЭС</h2>
-                <button type="button"
-                        class="pics__like button"
-                        aria-label="Поставить лайк"
-                ></button>
-              </figcaption>
-            </figure>
-          </li>
-        </ul>
+
+        <ul class="pics__grid"></ul>
 
       </section>
     </main>
@@ -175,27 +85,22 @@
 
   </div>
 
-  <script>
-    const likeButtons = document.querySelectorAll(`.pics__like`)
-    const editButton = document.querySelector(`.profile__edit`)
-    const closeButton = document.querySelector(`.popup__close`)
+  <template id="pic-template">
+    <figure class="pics__grid-item">
+      <img src=""
+           alt=""
+           class="pics__pic"
+      >
+      <figcaption class="pics__title">
+        <h2 class="pics__pic-name"></h2>
+        <button type="button"
+                class="pics__like button"
+                aria-label="Поставить лайк"
+        ></button>
+      </figcaption>
+    </figure>
+  </template>
 
-    const popup = document.querySelector(`.popup`)
-
-
-    for (const likeButton of likeButtons) {
-      likeButton.addEventListener(`click`, () => {
-        likeButton.classList.toggle(`pics__like_active`)
-      })
-    }
-
-    editButton.addEventListener(`click`, () => {
-      popup.classList.add(`popup_opened`)
-    })
-
-    closeButton.addEventListener(`click`, () => {
-      popup.classList.remove(`popup_opened`)
-    })
-  </script>
+  <script src="index.js"></script>
 </body>
 </html>

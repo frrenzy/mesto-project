@@ -1,3 +1,4 @@
+// Render
 const initialCards = [
   {
     name: 'Архыз',
@@ -28,7 +29,7 @@ const initialCards = [
 const picsGrid = document.querySelector('.pics__grid');
 const picTemplate = document.querySelector('#pic-template').content;
 
-initialCards.forEach(card => {
+const renderCard = card => {
   const liElement = document.createElement('li');
   const picElement = picTemplate.querySelector('.pics__grid-item').cloneNode(true);
 
@@ -41,4 +42,37 @@ initialCards.forEach(card => {
 
   liElement.append(picElement);
   picsGrid.append(liElement);
-})
+}
+
+initialCards.forEach(renderCard);
+
+// Profile edit form
+const popup = document.querySelector('.popup');
+const formElement = document.querySelector('.popup__container');
+const profileName = document.querySelector('.profile__name');
+const profileDescription = document.querySelector('.profile__description');
+const name = document.querySelector('.popup__input[name="name"]');
+const description = document.querySelector('.popup__input[name="description"]');
+
+const closePopup = () => popup.classList.remove('popup_opened');
+
+document.querySelector('.profile__edit').addEventListener('click', () => {
+  name.value = profileName.textContent;
+  description.value = profileDescription.textContent;
+
+  popup.classList.add('popup_opened');
+});
+
+formElement.addEventListener('submit', evt => {
+  evt.preventDefault();
+
+  profileName.textContent = name.value;
+  profileDescription.textContent = description.value;
+
+  name.value = '';
+  description.value = '';
+
+  closePopup();
+});
+
+popup.querySelector('.popup__close').addEventListener('click', closePopup);

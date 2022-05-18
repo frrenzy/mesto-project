@@ -36,8 +36,12 @@ const renderCard = card => {
   picElement.querySelector('.pics__pic').src = card.link;
   picElement.querySelector('.pics__pic').alt = card.name;
   picElement.querySelector('.pics__pic-name').textContent = card.name;
+
   picElement.querySelector('.pics__like').addEventListener('click', evt => {
     evt.target.classList.toggle('pics__like_active');
+  });
+  picElement.querySelector('.pics__delete').addEventListener('click', evt => {
+    evt.target.closest('li').remove();
   });
 
   liElement.append(picElement);

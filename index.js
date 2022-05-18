@@ -52,8 +52,8 @@ initialCards.forEach(renderCard);
 
 
 // Common popup functions
-const closePopup = element => element.parentElement.classList.remove('popup_opened');
-const openPopup = element => element.parentElement.classList.add('popup_opened');
+const closePopup = element => element.closest('.popup').classList.remove('popup_opened');
+const openPopup = element => element.closest('.popup').classList.add('popup_opened');
 
 document.querySelectorAll('.popup__close').forEach(button => {
   button.addEventListener('click', () => {

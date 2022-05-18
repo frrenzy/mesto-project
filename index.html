@@ -55,63 +55,67 @@
     </footer>
 
     <div class="popup">
-      <button type="button"
-              class="popup__close button"
-              aria-label="Закрыть форму"
-      ></button>
-      <form action="#"
-            class="popup__form"
-            name="edit-profile"
-      >
-        <h2 class="popup__heading">Редактировать профиль</h2>
-        <input class="popup__input"
-               type="text"
-               name="name"
-               value=""
+      <div class="popup__container">
+        <button type="button"
+                class="popup__close button"
+                aria-label="Закрыть форму"
+        ></button>
+        <form action="#"
+              class="popup__form"
+              name="edit-profile"
         >
-        <input class="popup__input"
-               type="text"
-               name="description"
-               value=""
-        >
-        <button class="popup__submit button"
-                type="submit"
-                aria-labelledby="Сохранить изменения"
-        >
-          Сохранить
-        </button>
-      </form>
+          <h2 class="popup__heading">Редактировать профиль</h2>
+          <input class="popup__input"
+                 type="text"
+                 name="name"
+                 value=""
+          >
+          <input class="popup__input"
+                 type="text"
+                 name="description"
+                 value=""
+          >
+          <button class="popup__submit button"
+                  type="submit"
+                  aria-labelledby="Сохранить изменения"
+          >
+            Сохранить
+          </button>
+        </form>
+      </div>
     </div>
 
     <div class="popup">
-      <button type="button"
-              class="popup__close button"
-              aria-label="Закрыть форму"
-      ></button>
-      <form action="#"
-            class="popup__form"
-            name="add-card"
-      >
-        <h2 class="popup__heading">Новое место</h2>
-        <input class="popup__input"
-               type="text"
-               name="pic-name"
-               placeholder="Название"
-               value=""
+      <div class="popup__container">
+        <button type="button"
+                class="popup__close button"
+                aria-label="Закрыть форму"
+        ></button>
+        <form action="#"
+              class="popup__form"
+              name="add-card"
         >
-        <input class="popup__input"
-               type="text"
-               name="link"
-               placeholder="Ссылка на картинку"
-               value=""
-        >
-        <button class="popup__submit button"
-                type="submit"
-                aria-labelledby="Создать место"
-        >
-          Создать
-        </button>
-      </form>
+          <h2 class="popup__heading">Новое место</h2>
+          <input class="popup__input"
+                 type="text"
+                 name="pic-name"
+                 placeholder="Название"
+                 value=""
+          >
+          <input class="popup__input"
+                 type="text"
+                 name="link"
+                 placeholder="Ссылка на картинку"
+                 value=""
+          >
+          <button class="popup__submit button"
+                  type="submit"
+                  aria-labelledby="Создать место"
+          >
+            Создать
+          </button>
+        </form>
+      </div>
     </div>
 
   </div>

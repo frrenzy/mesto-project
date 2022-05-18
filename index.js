@@ -1,3 +1,19 @@
+// Pic popup
+const openBigPicture = evt => {
+  const bigPictureContainer = document.querySelector('.popup_type_picture');
+  const picture = bigPictureContainer.querySelector('.popup__picture');
+  const caption = bigPictureContainer.querySelector('.popup__title');
+
+  const smallPicture = evt.currentTarget.querySelector('.pics__pic');
+
+  picture.src = smallPicture.src;
+  picture.alt = smallPicture.alt;
+
+  caption.textContent = smallPicture.alt;
+
+  openPopup(bigPictureContainer);
+}
+
 // Render
 const initialCards = [
   {
@@ -37,6 +53,7 @@ const renderCard = card => {
   picElement.querySelector('.pics__pic').alt = card.name;
   picElement.querySelector('.pics__pic-name').textContent = card.name;
 
+  picElement.addEventListener('click', openBigPicture);
   picElement.querySelector('.pics__like').addEventListener('click', evt => {
     evt.target.classList.toggle('pics__like_active');
   });

@@ -51,8 +51,10 @@ initialCards.forEach(renderCard);
 const closePopup = element => element.parentElement.classList.remove('popup_opened');
 const openPopup = element => element.parentElement.classList.add('popup_opened');
 
-document.querySelector('.popup__close').addEventListener('click', evt => {
-  closePopup(evt.target);
+document.querySelectorAll('.popup__close').forEach(button => {
+  button.addEventListener('click', () => {
+    closePopup(button);
+  });
 });
 
 
@@ -99,6 +101,9 @@ cardFormElement.addEventListener('submit', evt => {
     name: picNameInputElement.value,
     link: linkInputElement.value
   });
+
+  picNameInputElement.value = '';
+  linkInputElement.value = '';
 
   closePopup(cardFormElement);
 });

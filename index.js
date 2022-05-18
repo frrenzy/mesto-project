@@ -59,7 +59,7 @@ document.querySelectorAll('.popup__close').forEach(button => {
 
 
 // Profile edit form
-const profileFormElement = document.querySelector('.popup__container[name="edit-profile"]');
+const profileFormElement = document.querySelector('.popup__form[name="edit-profile"]');
 const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
 const nameInputElement = profileFormElement.querySelector('.popup__input[name="name"]');
@@ -86,7 +86,7 @@ profileFormElement.addEventListener('submit', evt => {
 
 
 // Add card form
-const cardFormElement = document.querySelector('.popup__container[name="add-card"]');
+const cardFormElement = document.querySelector('.popup__form[name="add-card"]');
 const picNameInputElement = cardFormElement.querySelector('.popup__input[name="pic-name"]');
 const linkInputElement = cardFormElement.querySelector('.popup__input[name="link"]');
 

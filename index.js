@@ -41,7 +41,7 @@ const renderCard = card => {
   });
 
   liElement.append(picElement);
-  picsGrid.append(liElement);
+  picsGrid.prepend(liElement);
 }
 
 initialCards.forEach(renderCard);
@@ -51,23 +51,26 @@ initialCards.forEach(renderCard);
 const closePopup = element => element.parentElement.classList.remove('popup_opened');
 const openPopup = element => element.parentElement.classList.add('popup_opened');
 
+document.querySelector('.popup__close').addEventListener('click', evt => {
+  closePopup(evt.target);
+});
+
 
 // Profile edit form
-const popup = document.querySelector('.popup');
-const formElement = document.querySelector('.popup__container');
+const profileFormElement = document.querySelector('.popup__container[name="edit-profile"]');
 const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
-const nameInputElement = formElement.querySelector('.popup__input[name="name"]');
-const descriptionInputElement = formElement.querySelector('.popup__input[name="description"]');
+const nameInputElement = profileFormElement.querySelector('.popup__input[name="name"]');
+const descriptionInputElement = profileFormElement.querySelector('.popup__input[name="description"]');
 
 document.querySelector('.profile__edit').addEventListener('click', () => {
   nameInputElement.value = profileName.textContent;
   descriptionInputElement.value = profileDescription.textContent;
 
-  openPopup(formElement);
+  openPopup(profileFormElement);
 });
 
-formElement.addEventListener('submit', evt => {
+profileFormElement.addEventListener('submit', evt => {
   evt.preventDefault();
 
   profileName.textContent = nameInputElement.value;
@@ -76,9 +79,26 @@ formElement.addEventListener('submit', evt => {
   nameInputElement.value = '';
   descriptionInputElement.value = '';
 
-  closePopup(formElement);
+  closePopup(profileFormElement);
 });
 
-popup.querySelector('.popup__close').addEventListener('click', evt => {
-  closePopup(evt.target);
+
+// Add card form
+const cardFormElement = document.querySelector('.popup__container[name="add-card"]');
+const picNameInputElement = cardFormElement.querySelector('.popup__input[name="pic-name"]');
+const linkInputElement = cardFormElement.querySelector('.popup__input[name="link"]');
+
+document.querySelector('.profile__add').addEventListener('click', () => {
+  openPopup(cardFormElement);
+})
+
+cardFormElement.addEventListener('submit', evt => {
+  evt.preventDefault();
+
+  renderCard({
+    name: picNameInputElement.value,
+    link: linkInputElement.value
+  });
+
+  closePopup(cardFormElement);
 });

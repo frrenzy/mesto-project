@@ -46,33 +46,39 @@ const renderCard = card => {
 
 initialCards.forEach(renderCard);
 
+
+// Common popup functions
+const closePopup = element => element.parentElement.classList.remove('popup_opened');
+const openPopup = element => element.parentElement.classList.add('popup_opened');
+
+
 // Profile edit form
 const popup = document.querySelector('.popup');
 const formElement = document.querySelector('.popup__container');
 const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
-const name = document.querySelector('.popup__input[name="name"]');
-const description = document.querySelector('.popup__input[name="description"]');
-
-const closePopup = () => popup.classList.remove('popup_opened');
+const nameInputElement = formElement.querySelector('.popup__input[name="name"]');
+const descriptionInputElement = formElement.querySelector('.popup__input[name="description"]');
 
 document.querySelector('.profile__edit').addEventListener('click', () => {
-  name.value = profileName.textContent;
-  description.value = profileDescription.textContent;
+  nameInputElement.value = profileName.textContent;
+  descriptionInputElement.value = profileDescription.textContent;
 
-  popup.classList.add('popup_opened');
+  openPopup(formElement);
 });
 
 formElement.addEventListener('submit', evt => {
   evt.preventDefault();
 
-  profileName.textContent = name.value;
-  profileDescription.textContent = description.value;
+  profileName.textContent = nameInputElement.value;
+  profileDescription.textContent = descriptionInputElement.value;
 
-  name.value = '';
-  description.value = '';
+  nameInputElement.value = '';
+  descriptionInputElement.value = '';
 
-  closePopup();
+  closePopup(formElement);
 });
 
-popup.querySelector('.popup__close').addEventListener('click', closePopup);
+popup.querySelector('.popup__close').addEventListener('click', evt => {
+  closePopup(evt.target);
+});

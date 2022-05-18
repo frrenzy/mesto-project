@@ -1,5 +1,9 @@
 // Pic popup
 const openBigPicture = evt => {
+  if (evt.target.classList.has('pics__like') || evt.target.classList.has('pics__delete')) {
+    return;
+  }
+
   const bigPictureContainer = document.querySelector('.popup_type_picture');
   const picture = bigPictureContainer.querySelector('.popup__picture');
   const caption = bigPictureContainer.querySelector('.popup__title');
@@ -13,6 +17,7 @@ const openBigPicture = evt => {
 
   openPopup(bigPictureContainer);
 }
+
 
 // Render
 const initialCards = [

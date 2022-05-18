@@ -1,6 +1,6 @@
 // Pic popup
 const openBigPicture = evt => {
-  if (evt.target.classList.has('pics__like') || evt.target.classList.has('pics__delete')) {
+  if (evt.target.classList.contains('pics__like') || evt.target.classList.contains('pics__delete')) {
     return;
   }
 

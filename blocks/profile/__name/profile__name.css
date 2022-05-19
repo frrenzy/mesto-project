@@ -10,6 +10,16 @@
   grid-column: 2 / 3;
   justify-self: start;
   align-self: end;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 520px;
+}
+
+@media screen and (max-width: 1024px) {
+  .profile__name {
+    max-width: 360px;
+  }
 }
 
 @media screen and (max-width: 767px) {
@@ -17,5 +27,6 @@
     font-size: 27px;
     line-height: 33px;
     justify-self: flex-start;
+    max-width: 246px;
   }
 }

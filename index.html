@@ -135,23 +135,25 @@
   </div>
 
   <template id="pic-template">
-    <figure class="pics__grid-item">
-      <img src=""
-           alt=""
-           class="pics__pic"
-      >
-      <button type="button"
-              class="pics__delete button"
-              aria-label="Кнопка удаления картинки"
-      ></button>
-      <figcaption class="pics__title">
-        <h2 class="pics__pic-name"></h2>
+    <li>
+      <figure class="pics__grid-item">
+        <img src=""
+             alt=""
+             class="pics__pic"
+        >
         <button type="button"
-                class="pics__like button"
-                aria-label="Поставить лайк"
+                class="pics__delete button"
+                aria-label="Кнопка удаления картинки"
         ></button>
-      </figcaption>
-    </figure>
+        <figcaption class="pics__title">
+          <h2 class="pics__pic-name"></h2>
+          <button type="button"
+                  class="pics__like button"
+                  aria-label="Поставить лайк"
+          ></button>
+        </figcaption>
+      </figure>
+    </li>
   </template>
 
   <script src="index.js"></script>

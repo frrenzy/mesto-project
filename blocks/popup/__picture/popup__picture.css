@@ -2,7 +2,3 @@
   max-width: 75vw;
   max-height: 75vh;
 }
-
-.popup__picture:hover {
-  cursor: pointer;
-}

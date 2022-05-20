@@ -5,3 +5,7 @@
   height: 282px;
   line-height: 0;
 }
+
+.pics__pic:hover {
+  cursor: pointer;
+}

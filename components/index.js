@@ -1,11 +1,11 @@
+import { initialCards, renderCard } from "./card.js";
+
+
 // Popups
+
 const profilePopupElement = document.querySelector('.popup_type_profile');
 const cardPopupElement = document.querySelector('.popup_type_card');
 const picturePopupElement = document.querySelector('.popup_type_picture');
-
-// Gallery & card template
-const picsGrid = document.querySelector('.pics__grid');
-const picTemplate = document.querySelector('#pic-template').content;
 
 // Card popup
 const cardFormElement = cardPopupElement.querySelector('.popup__form[name="add-card"]');
@@ -29,34 +29,6 @@ const descriptionInputElement = profileFormElement.querySelector('.popup__input[
 const closePopup = popup => popup.classList.remove('popup_opened');
 const openPopup = popup => popup.classList.add('popup_opened');
 
-// Gallery
-const createCard = card => {
-  const picElement = picTemplate.querySelector('li').cloneNode(true);
-  const picElementPicture = picElement.querySelector('.pics__pic');
-
-  picElementPicture.src = card.link;
-  picElementPicture.alt = card.name;
-  picElement.querySelector('.pics__pic-name').textContent = card.name;
-
-  picElementPicture.addEventListener('click', () => {
-    openBigPicture(picElementPicture);
-  });
-  picElement.querySelector('.pics__like').addEventListener('click', evt => {
-    evt.target.classList.toggle('pics__like_active');
-  });
-  picElement.querySelector('.pics__delete').addEventListener('click', evt => {
-    evt.target.closest('li').remove();
-  });
-
-  return picElement;
-}
-
-const renderCard = card => {
-  const picElement = createCard(card);
-
-  picsGrid.prepend(picElement);
-}
-
 //Profile popup
 function populateProfileForm() {
   nameInputElement.value = profileName.textContent;
@@ -70,14 +42,7 @@ function openProfileEditPopup() {
 }
 
 // Picture popup
-const openBigPicture = card => {
-  picturePopupPicture.src = card.src;
-  picturePopupPicture.alt = card.alt;
 
-  picturePopupCaption.textContent = card.alt;
-
-  openPopup(picturePopupElement);
-}
 
 
 

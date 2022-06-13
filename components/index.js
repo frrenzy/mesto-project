@@ -2,6 +2,7 @@ import { initialCards, renderCard } from "./card.js";
 import { profileName, profileDescription, closePopup, openPopup } from "./utils.js";
 import { popups, openProfileEditPopup} from "./modal.js";
 import { cardFormElement, profileFormElement } from "./forms.js";
+import { enableValidation } from "./validate.js";
 
 const { cardPopupElement, picturePopupElement, profilePopupElement } = popups
 
@@ -57,4 +58,13 @@ document.addEventListener('keydown', evt => {
       closePopup(popup)
     })
   }
+});
+
+enableValidation({
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__submit',
+  inactiveButtonClass: 'popup__submit_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
 });

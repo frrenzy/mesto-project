@@ -4,6 +4,9 @@ import { popups, openProfileEditPopup} from "./modal.js";
 import { cardFormElement, profileFormElement } from "./forms.js";
 import { enableValidation } from "./validate.js";
 
+import '../pages/index.css';
+
+
 const { cardPopupElement, picturePopupElement, profilePopupElement } = popups
 
 initialCards.forEach(renderCard);

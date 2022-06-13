@@ -49,4 +49,12 @@ Array.from(Object.values(popups)).forEach(popup => {
       closePopup(popup)
     }
   })
-})
+});
+
+document.addEventListener('keydown', evt => {
+  if (evt.key === 'Escape') {
+    Array.from(Object.values(popups)).forEach(popup => {
+      closePopup(popup)
+    })
+  }
+});

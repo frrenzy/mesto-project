@@ -5,3 +5,5 @@
 /httpRequests/
 # WebStorm
 /.idea/
+dist
+node_modules

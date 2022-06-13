@@ -69,12 +69,22 @@
                  type="text"
                  name="name"
                  value=""
+                 required
+                 minlength="2"
+                 maxlength="40"
+                 id="edit-name"
           >
+          <span class="edit-name-error popup__error"></span>
           <input class="popup__input"
                  type="text"
                  name="description"
                  value=""
+                 required
+                 minlength="2"
+                 maxlength="200"
+                 id="edit-description"
           >
+          <span class="edit-description-error popup__error"></span>
           <button class="popup__submit button"
                   type="submit"
                   aria-labelledby="Сохранить изменения"
@@ -101,13 +111,21 @@
                  name="name"
                  placeholder="Название"
                  value=""
+                 required
+                 minlength="2"
+                 maxlength="40"
+                 id="add-name"
           >
+          <span class="add-name-error popup__error"></span>
           <input class="popup__input"
-                 type="text"
+                 type="url"
                  name="link"
                  placeholder="Ссылка на картинку"
                  value=""
+                 required
+                 id="add-link"
           >
+          <span class="add-link-error popup__error"></span>
           <button class="popup__submit button"
                   type="submit"
                   aria-labelledby="Создать место"

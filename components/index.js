@@ -1,8 +1,9 @@
 import { initialCards, renderCard } from "./card.js";
 import { profileName, profileDescription, closePopup, openPopup } from "./utils.js";
-import { cardPopupElement, profilePopupElement, openProfileEditPopup} from "./modal.js";
+import { popups, openProfileEditPopup} from "./modal.js";
 import { cardFormElement, profileFormElement } from "./forms.js";
 
+const { cardPopupElement, picturePopupElement, profilePopupElement } = popups
 
 initialCards.forEach(renderCard);
 
@@ -41,3 +42,11 @@ profileFormElement.addEventListener('submit', evt => {
 
   closePopup(profilePopupElement);
 });
+
+Array.from(Object.values(popups)).forEach(popup => {
+  popup.addEventListener('click', evt => {
+    if (evt.target === evt.currentTarget) {
+      closePopup(popup)
+    }
+  })
+})

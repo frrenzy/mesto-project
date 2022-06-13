@@ -2,16 +2,18 @@ import { openPopup } from "./utils.js";
 import { populateProfileForm } from "./forms.js";
 
 
-
 const profilePopupElement = document.querySelector('.popup_type_profile');
 const cardPopupElement = document.querySelector('.popup_type_card');
 const picturePopupElement = document.querySelector('.popup_type_picture');
 
+const popups = {
+  profilePopupElement,
+  cardPopupElement,
+  picturePopupElement
+}
 
 const picturePopupPicture = picturePopupElement.querySelector('.popup__picture');
 const picturePopupCaption = picturePopupElement.querySelector('.popup__title');
-
-
 
 const openBigPicture = card => {
   picturePopupPicture.src = card.src;
@@ -29,9 +31,7 @@ const openProfileEditPopup = () => {
 }
 
 export {
-  profilePopupElement,
-  cardPopupElement,
-  picturePopupElement,
+  popups,
   openBigPicture,
   openProfileEditPopup
 }

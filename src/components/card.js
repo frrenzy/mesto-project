@@ -1,35 +1,49 @@
 import { openBigPicture } from "./modal.js";
+import { storage } from "./storage.js";
+import { addLike, deleteLike } from "./api.js";
 
 
 const picsGrid = document.querySelector('.pics__grid');
 const picTemplate = document.querySelector('#pic-template').content;
 
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+// const initialCards = [
+//   {
+//     name: 'Архыз',
+//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+//   },
+//   {
+//     name: 'Челябинская область',
+//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+//   },
+//   {
+//     name: 'Иваново',
+//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+//   },
+//   {
+//     name: 'Камчатка',
+//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+//   },
+//   {
+//     name: 'Холмогорский район',
+//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+//   },
+//   {
+//     name: 'Байкал',
+//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+//   }
+// ];
+
+const toggleLike = (like, counter, cardId) => {
+  if (like.classList.contains('pics__like_active')) {
+    like.classList.remove('pics__like_active');
+    counter.textContent = +(counter.textContent) - 1;
+    deleteLike(cardId).then(() => {});
+  } else {
+    like.classList.add('pics__like_active');
+    counter.textContent = +(counter.textContent) + 1;
+    addLike(cardId).then(() => {});
   }
-];
+}
 
 const renderCard = card => {
   const picElement = createCard(card);
@@ -39,18 +53,33 @@ const renderCard = card => {
 const createCard = card => {
   const picElement = picTemplate.querySelector('li').cloneNode(true);
   const picElementPicture = picElement.querySelector('.pics__pic');
+  const picElementDelete = picElement.querySelector('.pics__delete');
+  const picElementLike = picElement.querySelector('.pics__like');
+  const picElementLikeCounter = picElement.querySelector('.pics__like-counter');
 
   picElementPicture.src = card.link;
   picElementPicture.alt = card.name;
+  picElementPicture.dataset.id = card._id;
+  picElementLikeCounter.textContent = card.likes.length;
   picElement.querySelector('.pics__pic-name').textContent = card.name;
+
+  if (card.likes.find(item => item._id === storage.getItem('profileId'))) {
+    picElementLike.classList.add('pics__like_active')
+  }
+
+  if (card.owner._id !== storage.getItem('profileId')) {
+    picElementDelete.classList.add('pics__delete_hidden');
+  }
 
   picElementPicture.addEventListener('click', () => {
     openBigPicture(picElementPicture);
   });
-  picElement.querySelector('.pics__like').addEventListener('click', evt => {
-    evt.target.classList.toggle('pics__like_active');
+
+  picElementLike.addEventListener('click', () => {
+    toggleLike(picElementLike, picElementLikeCounter, picElementPicture.dataset.id)
   });
-  picElement.querySelector('.pics__delete').addEventListener('click', evt => {
+
+  picElementDelete.addEventListener('click', evt => {
     evt.target.closest('li').remove();
   });
 
@@ -58,6 +87,5 @@ const createCard = card => {
 }
 
 export {
-  initialCards,
   renderCard
 }

@@ -1,15 +1,32 @@
-import { initialCards, renderCard } from "./card.js";
-import { profileName, profileDescription, closePopup, openPopup } from "./utils.js";
-import { popups, openProfileEditPopup} from "./modal.js";
+import { renderCard } from "./card.js";
+import {profileName, profileDescription, profileAvatar, closePopup, openPopup, toggleLoading} from "./utils.js";
+import { popups, openProfileEditPopup } from "./modal.js";
 import { cardFormElement, profileFormElement } from "./forms.js";
 import { enableValidation } from "./validate.js";
+import { addCard, getCards, getUser } from "./api.js";
+import { storage } from "./storage.js";
 
 import '../pages/index.css';
 
 
-const { cardPopupElement, picturePopupElement, profilePopupElement } = popups
+getUser()
+  .then(data => {
+    profileName.textContent = data.name;
+    profileDescription.textContent = data.about;
+    profileAvatar.src = data.avatar;
+    storage.setItem('profileId', data._id);
+  })
+  .catch(err => console.log(err));
 
-initialCards.forEach(renderCard);
+getCards()
+  .then(data => {
+    data.forEach(card => {
+      renderCard(card)
+    });
+  })
+  .catch(err => console.log(err));
+
+
 
 document.querySelector('.profile__add').addEventListener('click', () => {
   openPopup(cardPopupElement);
@@ -19,17 +36,25 @@ document.querySelector('.profile__edit').addEventListener('click', () => {
   openProfileEditPopup();
 });
 
+
+const { cardPopupElement, picturePopupElement, profilePopupElement } = popups
+
 cardFormElement.addEventListener('submit', evt => {
   evt.preventDefault();
+  toggleLoading(cardFormElement, true);
 
-  renderCard({
+  addCard({
     name: cardFormElement.elements.name.value,
     link: cardFormElement.elements.link.value
-  });
-
-  cardFormElement.reset();
-
-  closePopup(cardPopupElement);
+  })
+    .then(card => {
+      renderCard(card)
+      cardFormElement.reset();
+    })
+    .finally(() => {
+      closePopup(cardPopupElement);
+      toggleLoading(cardFormElement, false)
+    })
 });
 
 profileFormElement.addEventListener('submit', evt => {

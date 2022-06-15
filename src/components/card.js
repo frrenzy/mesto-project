@@ -9,13 +9,19 @@ const picTemplate = document.querySelector('#pic-template').content;
 
 const toggleLike = (like, counter, cardId) => {
   if (like.classList.contains('pics__like_active')) {
-    like.classList.remove('pics__like_active');
-    counter.textContent = +(counter.textContent) - 1;
-    deleteLike(cardId).then(() => {});
+    deleteLike(cardId)
+      .then(data => {
+        like.classList.remove('pics__like_active');
+        counter.textContent = data.likes.length;
+      })
+      .catch(err => console.log(err));
   } else {
-    like.classList.add('pics__like_active');
-    counter.textContent = +(counter.textContent) + 1;
-    addLike(cardId).then(() => {});
+    addLike(cardId)
+      .then(data => {
+        like.classList.add('pics__like_active');
+        counter.textContent = data.likes.length;
+      })
+      .catch(err => console.log(err));
   }
 }
 

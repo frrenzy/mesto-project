@@ -15,23 +15,18 @@ import '../pages/index.css';
 const { cardPopupElement, profilePopupElement, avatarPopupElement, deletePopupElement } = popups;
 
 
-getUser()
-  .then(data => {
-    profileName.textContent = data.name;
-    profileDescription.textContent = data.about;
-    profileAvatar.src = data.avatar;
-    storage.setItem('profileId', data._id);
-  })
-  .catch(err => console.log(err));
+Promise.all([getUser(), getCards()])
+  .then(([user, cards]) => {
+    profileName.textContent = user.name;
+    profileDescription.textContent = user.about;
+    profileAvatar.src = user.avatar;
+    storage.setItem('profileId', user._id);
 
-getCards()
-  .then(data => {
-    data.forEach(card => {
+    cards.reverse().forEach(card => {
       renderCard(card);
     });
   })
   .catch(err => console.log(err));
-
 
 
 document.querySelector('.profile__add').addEventListener('click', () => {
@@ -55,10 +50,11 @@ cardFormElement.addEventListener('submit', evt => {
     .then(card => {
       renderCard(card)
       cardFormElement.reset();
+
+      closePopup(cardPopupElement);
     })
     .catch(err => console.log(err))
     .finally(() => {
-      closePopup(cardPopupElement);
       toggleLoading(cardFormElement, false, 'Создать')
     })
 });
@@ -74,10 +70,11 @@ profileFormElement.addEventListener('submit', evt => {
     .then(data => {
       profileName.textContent = data.name;
       profileDescription.textContent = data.about;
+
+      closePopup(profilePopupElement);
     })
     .catch(err => console.log(err))
     .finally(() => {
-      closePopup(profilePopupElement);
       toggleLoading(profileFormElement, false)
     })
 });
@@ -89,10 +86,11 @@ avatarFormElement.addEventListener('submit', evt => {
   editAvatar(avatarFormElement.elements.link.value)
     .then(data => {
       profileAvatar.src = data.avatar
+
+      closePopup(avatarPopupElement);
     })
     .catch(err => console.log(err))
     .finally(() => {
-      closePopup(avatarPopupElement);
       toggleLoading(avatarFormElement, false)
     })
 });
@@ -109,10 +107,11 @@ deleteFormElement.addEventListener('submit', evt => {
         .querySelector(`.pics__pic[data-id="${cardId}"]`)
         .closest('li')
         .remove()
+
+      closePopup(deletePopupElement);
     })
     .catch(err => console.log(err))
     .finally(() => {
-      closePopup(deletePopupElement);
       toggleLoading(deleteFormElement, false, 'Да');
     })
 })

@@ -8,26 +8,23 @@ const config = {
   }
 }
 
-export const getUser = () => {
-  return fetch(`${config.baseURL}/users/me`, config.fetchConfig)
-    .then(res => {
-      if (res.ok) {
-        return res.json()
-      }
+const onFulfilled = res => {
+  if (res.ok) {
+    return res.json()
+  }
 
-      return Promise.reject(`Error: ${res.status}`)
-    })
+  return Promise.reject(`Error: ${res.status}`)
+};
+
+export const getUser = () => {
+
+  return fetch(`${config.baseURL}/users/me`, config.fetchConfig)
+    .then(onFulfilled)
 }
 
 export const getCards = () => {
   return fetch(`${config.baseURL}/cards`, config.fetchConfig)
-    .then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-
-      return Promise.reject(`Error: ${res.status}`)
-    })
+    .then(onFulfilled)
 }
 
 export const editProfile = (info) => {
@@ -36,13 +33,7 @@ export const editProfile = (info) => {
     body: JSON.stringify(info),
     ...config.fetchConfig
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-
-      return Promise.reject(`Error: ${res.status}`)
-    })
+    .then(onFulfilled)
 }
 
 export const addCard = (card) => {
@@ -51,13 +42,7 @@ export const addCard = (card) => {
     body: JSON.stringify(card),
     ...config.fetchConfig
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-
-      return Promise.reject(`Error: ${res.status}`)
-    })
+    .then(onFulfilled)
 }
 
 export const deleteCard = (cardId) => {
@@ -65,13 +50,7 @@ export const deleteCard = (cardId) => {
     method: 'DELETE',
     ...config.fetchConfig
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-
-      return Promise.reject(`Error: ${res.status}`)
-    })
+    .then(onFulfilled)
 }
 
 export const addLike = (cardId) => {
@@ -79,13 +58,7 @@ export const addLike = (cardId) => {
     method: 'PUT',
     ...config.fetchConfig
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-
-      return Promise.reject(`Error: ${res.status}`)
-    })
+    .then(onFulfilled)
 }
 
 export const deleteLike = (cardId) => {
@@ -93,13 +66,7 @@ export const deleteLike = (cardId) => {
     method: 'DELETE',
     ...config.fetchConfig
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-
-      return Promise.reject(`Error: ${res.status}`)
-    })
+    .then(onFulfilled)
 }
 
 export const editAvatar = (avatar) => {
@@ -108,11 +75,5 @@ export const editAvatar = (avatar) => {
     body: JSON.stringify({avatar}),
     ...config.fetchConfig
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-
-      return Promise.reject(`Error: ${res.status}`)
-    })
+    .then(onFulfilled)
 }

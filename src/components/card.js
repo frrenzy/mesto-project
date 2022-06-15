@@ -1,4 +1,4 @@
-import { openBigPicture } from "./modal.js";
+import { openBigPicture, openDeletePopup } from "./modal.js";
 import { storage } from "./storage.js";
 import { addLike, deleteLike } from "./api.js";
 
@@ -53,8 +53,9 @@ const createCard = card => {
     toggleLike(picElementLike, picElementLikeCounter, picElementPicture.dataset.id)
   });
 
-  picElementDelete.addEventListener('click', evt => {
-    evt.target.closest('li').remove();
+  picElementDelete.addEventListener('click', () => {
+    storage.setItem('cardId', card._id);
+    openDeletePopup();
   });
 
   return picElement;

@@ -6,12 +6,14 @@ const profilePopupElement = document.querySelector('.popup_type_profile');
 const cardPopupElement = document.querySelector('.popup_type_card');
 const picturePopupElement = document.querySelector('.popup_type_picture');
 const avatarPopupElement = document.querySelector('.popup_type_avatar');
+const deletePopupElement = document.querySelector('.popup_type_delete');
 
 const popups = {
   profilePopupElement,
   cardPopupElement,
   picturePopupElement,
-  avatarPopupElement
+  avatarPopupElement,
+  deletePopupElement
 }
 
 const picturePopupPicture = picturePopupElement.querySelector('.popup__picture');
@@ -26,6 +28,8 @@ const openBigPicture = card => {
   openPopup(picturePopupElement);
 }
 
+const openDeletePopup = () => openPopup(deletePopupElement);
+
 const openProfileEditPopup = () => {
   populateProfileForm();
 
@@ -35,5 +39,6 @@ const openProfileEditPopup = () => {
 export {
   popups,
   openBigPicture,
-  openProfileEditPopup
+  openProfileEditPopup,
+  openDeletePopup
 }

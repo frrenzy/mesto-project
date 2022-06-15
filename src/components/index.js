@@ -1,15 +1,15 @@
 import { renderCard } from "./card.js";
 import { profileName, profileDescription, profileAvatar, closePopup, openPopup, toggleLoading} from "./utils.js";
 import { popups, openProfileEditPopup } from "./modal.js";
-import {avatarFormElement, cardFormElement, profileFormElement} from "./forms.js";
+import { avatarFormElement, cardFormElement, profileFormElement, deleteFormElement } from "./forms.js";
 import { enableValidation } from "./validate.js";
-import {addCard, editAvatar, editProfile, getCards, getUser} from "./api.js";
+import { addCard, deleteCard, editAvatar, editProfile, getCards, getUser } from "./api.js";
 import { storage } from "./storage.js";
 
 import '../pages/index.css';
 
 
-const { cardPopupElement, picturePopupElement, profilePopupElement, avatarPopupElement } = popups
+const { cardPopupElement, profilePopupElement, avatarPopupElement, deletePopupElement } = popups
 
 
 getUser()
@@ -24,7 +24,7 @@ getUser()
 getCards()
   .then(data => {
     data.forEach(card => {
-      renderCard(card)
+      renderCard(card);
     });
   })
   .catch(err => console.log(err));
@@ -58,7 +58,7 @@ cardFormElement.addEventListener('submit', evt => {
     .catch(err => console.log(err))
     .finally(() => {
       closePopup(cardPopupElement);
-      toggleLoading(cardFormElement, false)
+      toggleLoading(cardFormElement, false, 'Создать')
     })
 });
 
@@ -95,6 +95,26 @@ avatarFormElement.addEventListener('submit', evt => {
       toggleLoading(avatarFormElement, false)
     })
 });
+
+deleteFormElement.addEventListener('submit', evt => {
+  evt.preventDefault();
+  toggleLoading(deleteFormElement, true);
+
+  const cardId = storage.getItem('cardId');
+
+  deleteCard(cardId)
+    .then(data => {
+      document
+        .querySelector(`.pics__pic[data-id="${cardId}"]`)
+        .closest('li')
+        .remove()
+    })
+    .catch(err => console.log(err))
+    .finally(() => {
+      closePopup(deletePopupElement);
+      toggleLoading(deleteFormElement, false, 'Да');
+    })
+})
 
 Array.from(Object.values(popups)).forEach(popup => {
   popup.addEventListener('mousedown', evt => {

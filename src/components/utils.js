@@ -19,8 +19,8 @@ const openPopup = popup => {
   document.addEventListener('keydown', setEscapeListener)
 }
 
-const toggleLoading = (form, isLoading) => {
-  form.querySelector('.popup__submit').textContent = isLoading ? 'Сохранение' : 'Сохранить';
+const toggleLoading = (form, isLoading, text='Сохранить') => {
+  form.querySelector('.popup__submit').textContent = isLoading ? 'Сохранение...' : text;
 }
 
 export {

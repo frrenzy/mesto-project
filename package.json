@@ -1,7 +1,7 @@
 {
-  "name": "test",
+  "name": "mesto-project",
   "version": "1.0.0",
-  "description": "",
+  "description": "aboba",
   "main": "test/src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,7 +10,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
-  "author": "",
+  "author": "Ivan Sizov",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.18.5",

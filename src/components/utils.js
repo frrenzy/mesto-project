@@ -1,5 +1,6 @@
 const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
+const profileAvatar = document.querySelector('.profile__pic');
 
 
 const setEscapeListener = evt => {
@@ -18,9 +19,15 @@ const openPopup = popup => {
   document.addEventListener('keydown', setEscapeListener)
 }
 
+const toggleLoading = (form, isLoading, text='Сохранить') => {
+  form.querySelector('.popup__submit').textContent = isLoading ? 'Сохранение...' : text;
+}
+
 export {
   profileName,
   profileDescription,
+  profileAvatar,
   closePopup,
-  openPopup
+  openPopup,
+  toggleLoading
 }

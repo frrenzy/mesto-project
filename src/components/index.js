@@ -1,5 +1,8 @@
 import { renderCard } from "./card.js";
-import { profileName, profileDescription, profileAvatar, closePopup, openPopup, toggleLoading} from "./utils.js";
+import {
+  profileName, profileDescription, profileAvatar, avatarEditIcon,
+  closePopup, openPopup, toggleLoading
+} from "./utils.js";
 import { popups, openProfileEditPopup } from "./modal.js";
 import { avatarFormElement, cardFormElement, profileFormElement, deleteFormElement } from "./forms.js";
 import { enableValidation } from "./validate.js";
@@ -9,7 +12,7 @@ import { storage } from "./storage.js";
 import '../pages/index.css';
 
 
-const { cardPopupElement, profilePopupElement, avatarPopupElement, deletePopupElement } = popups
+const { cardPopupElement, profilePopupElement, avatarPopupElement, deletePopupElement } = popups;
 
 
 getUser()
@@ -35,11 +38,9 @@ document.querySelector('.profile__add').addEventListener('click', () => {
   openPopup(cardPopupElement);
 })
 
-document.querySelector('.profile__edit').addEventListener('click', () => {
-  openProfileEditPopup();
-});
+document.querySelector('.profile__edit').addEventListener('click', openProfileEditPopup);
 
-profileAvatar.addEventListener('click', () => {
+avatarEditIcon.addEventListener('click', () => {
   openPopup(avatarPopupElement);
 })
 

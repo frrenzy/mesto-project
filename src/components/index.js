@@ -1,12 +1,15 @@
 import { renderCard } from "./card.js";
-import {profileName, profileDescription, profileAvatar, closePopup, openPopup, toggleLoading} from "./utils.js";
+import { profileName, profileDescription, profileAvatar, closePopup, openPopup, toggleLoading} from "./utils.js";
 import { popups, openProfileEditPopup } from "./modal.js";
-import { cardFormElement, profileFormElement } from "./forms.js";
+import {avatarFormElement, cardFormElement, profileFormElement} from "./forms.js";
 import { enableValidation } from "./validate.js";
-import { addCard, getCards, getUser } from "./api.js";
+import {addCard, editAvatar, editProfile, getCards, getUser} from "./api.js";
 import { storage } from "./storage.js";
 
 import '../pages/index.css';
+
+
+const { cardPopupElement, picturePopupElement, profilePopupElement, avatarPopupElement } = popups
 
 
 getUser()
@@ -36,8 +39,9 @@ document.querySelector('.profile__edit').addEventListener('click', () => {
   openProfileEditPopup();
 });
 
-
-const { cardPopupElement, picturePopupElement, profilePopupElement } = popups
+profileAvatar.addEventListener('click', () => {
+  openPopup(avatarPopupElement);
+})
 
 cardFormElement.addEventListener('submit', evt => {
   evt.preventDefault();
@@ -51,6 +55,7 @@ cardFormElement.addEventListener('submit', evt => {
       renderCard(card)
       cardFormElement.reset();
     })
+    .catch(err => console.log(err))
     .finally(() => {
       closePopup(cardPopupElement);
       toggleLoading(cardFormElement, false)
@@ -59,11 +64,36 @@ cardFormElement.addEventListener('submit', evt => {
 
 profileFormElement.addEventListener('submit', evt => {
   evt.preventDefault();
+  toggleLoading(profileFormElement, true);
 
-  profileName.textContent = profileFormElement.elements.name.value;
-  profileDescription.textContent = profileFormElement.elements.description.value;
+  editProfile({
+    name: profileFormElement.elements.name.value,
+    about: profileFormElement.elements.description.value
+  })
+    .then(data => {
+      profileName.textContent = data.name;
+      profileDescription.textContent = data.about;
+    })
+    .catch(err => console.log(err))
+    .finally(() => {
+      closePopup(profilePopupElement);
+      toggleLoading(profileFormElement, false)
+    })
+});
 
-  closePopup(profilePopupElement);
+avatarFormElement.addEventListener('submit', evt => {
+  evt.preventDefault();
+  toggleLoading(avatarFormElement, true);
+
+  editAvatar(avatarFormElement.elements.link.value)
+    .then(data => {
+      profileAvatar.src = data.avatar
+    })
+    .catch(err => console.log(err))
+    .finally(() => {
+      closePopup(avatarPopupElement);
+      toggleLoading(avatarFormElement, false)
+    })
 });
 
 Array.from(Object.values(popups)).forEach(popup => {

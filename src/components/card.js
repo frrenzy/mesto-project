@@ -14,14 +14,14 @@ const toggleLike = (like, counter, cardId) => {
         like.classList.remove('pics__like_active');
         counter.textContent = data.likes.length;
       })
-      .catch(err => console.log(err));
+      .catch(console.log);
   } else {
     addLike(cardId)
       .then(data => {
         like.classList.add('pics__like_active');
         counter.textContent = data.likes.length;
       })
-      .catch(err => console.log(err));
+      .catch(console.log);
   }
 }
 

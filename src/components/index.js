@@ -1,13 +1,13 @@
-import { renderCard } from "./card.js";
+import { renderCard } from "./card";
 import {
   profileName, profileDescription, profileAvatar, avatarEditIcon,
   closePopup, openPopup, toggleLoading
-} from "./utils.js";
-import { popups, openProfileEditPopup } from "./modal.js";
-import { avatarFormElement, cardFormElement, profileFormElement, deleteFormElement } from "./forms.js";
-import { enableValidation } from "./validate.js";
-import { addCard, deleteCard, editAvatar, editProfile, getCards, getUser } from "./api.js";
-import { storage } from "./storage.js";
+} from "./utils";
+import { popups, openProfileEditPopup } from "./modal";
+import { avatarFormElement, cardFormElement, profileFormElement, deleteFormElement } from "./forms";
+import { enableValidation } from "./validate";
+import { addCard, deleteCard, editAvatar, editProfile, getCards, getUser } from "./api";
+import { storage } from "./storage";
 
 import '../pages/index.css';
 
@@ -26,7 +26,7 @@ Promise.all([getUser(), getCards()])
       renderCard(card);
     });
   })
-  .catch(err => console.log(err));
+  .catch(console.log);
 
 
 document.querySelector('.profile__add').addEventListener('click', () => {
@@ -53,7 +53,7 @@ cardFormElement.addEventListener('submit', evt => {
 
       closePopup(cardPopupElement);
     })
-    .catch(err => console.log(err))
+    .catch(console.log)
     .finally(() => {
       toggleLoading(cardFormElement, false, 'Создать')
     })
@@ -73,7 +73,7 @@ profileFormElement.addEventListener('submit', evt => {
 
       closePopup(profilePopupElement);
     })
-    .catch(err => console.log(err))
+    .catch(console.log)
     .finally(() => {
       toggleLoading(profileFormElement, false)
     })
@@ -89,7 +89,7 @@ avatarFormElement.addEventListener('submit', evt => {
 
       closePopup(avatarPopupElement);
     })
-    .catch(err => console.log(err))
+    .catch(console.log)
     .finally(() => {
       toggleLoading(avatarFormElement, false)
     })
@@ -110,7 +110,7 @@ deleteFormElement.addEventListener('submit', evt => {
 
       closePopup(deletePopupElement);
     })
-    .catch(err => console.log(err))
+    .catch(console.log)
     .finally(() => {
       toggleLoading(deleteFormElement, false, 'Да');
     })

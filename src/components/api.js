@@ -17,7 +17,6 @@ const onFulfilled = res => {
 };
 
 export const getUser = () => {
-
   return fetch(`${config.baseURL}/users/me`, config.fetchConfig)
     .then(onFulfilled)
 }

@@ -30,24 +30,30 @@ const renderCard = card => {
   picsGrid.prepend(picElement);
 }
 
-const createCard = card => {
+const createCard = ({
+  name,
+  link,
+  _id,
+  likes,
+  owner
+}) => {
   const picElement = picTemplate.querySelector('li').cloneNode(true);
   const picElementPicture = picElement.querySelector('.pics__pic');
   const picElementDelete = picElement.querySelector('.pics__delete');
   const picElementLike = picElement.querySelector('.pics__like');
   const picElementLikeCounter = picElement.querySelector('.pics__like-counter');
 
-  picElementPicture.src = card.link;
-  picElementPicture.alt = card.name;
-  picElementPicture.dataset.id = card._id;
-  picElementLikeCounter.textContent = card.likes.length;
-  picElement.querySelector('.pics__pic-name').textContent = card.name;
+  picElementPicture.src = link;
+  picElementPicture.alt = name;
+  picElementPicture.dataset.id = _id;
+  picElementLikeCounter.textContent = likes.length;
+  picElement.querySelector('.pics__pic-name').textContent = name;
 
-  if (card.likes.find(item => item._id === storage.getItem('profileId'))) {
+  if (likes.find(item => item._id === storage.getItem('profileId'))) {
     picElementLike.classList.add('pics__like_active')
   }
 
-  if (card.owner._id !== storage.getItem('profileId')) {
+  if (owner._id !== storage.getItem('profileId')) {
     picElementDelete.classList.add('pics__delete_hidden');
   }
 
@@ -60,7 +66,7 @@ const createCard = card => {
   });
 
   picElementDelete.addEventListener('click', () => {
-    storage.setItem('cardId', card._id);
+    storage.setItem('cardId', _id);
     openDeletePopup();
   });
 

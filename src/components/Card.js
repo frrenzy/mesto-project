@@ -87,7 +87,7 @@ export default class Card {
     picElementLikeCounter.textContent = this.#likes.length;
     this.#element.querySelector('.pics__pic-name').textContent = this.#name;
 
-    if (this.#likes.find(item => item.id === storage.getItem('profileId'))) {
+    if (this.#likes.find(item => item._id === storage.getItem('profileId'))) {
       picElementLike.classList.add('pics__like_active')
     }
 

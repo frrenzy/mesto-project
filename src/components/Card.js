@@ -1,24 +1,32 @@
 import { openBigPicture, openDeletePopup } from "./modal";
 import { storage } from "./storage";
 import { picsGrid } from "./constants"
-import Api from "./Api";
+
 
 export default class Card {
   #selector
   #name
   #link
-  #_id
+  #id
   #likes
   #owner
   #element
+  #addLike
+  #deleteLike
 
-  constructor({ name, link, _id, likes, owner }, selector) {
+  constructor(
+    { name, link, _id, likes, owner },
+    { addLike, deleteLike },
+    selector
+  ) {
     this.#link = link;
     this.#name = name;
     this.#selector = selector;
     this.#owner = owner;
-    this.#_id = _id;
+    this.#id = _id;
     this.#likes = likes;
+    this.#addLike = addLike;
+    this.#deleteLike = deleteLike;
   }
 
   #getElement() {
@@ -29,16 +37,16 @@ export default class Card {
       .cloneNode(true)
   }
 
-  #toggleLike(like, counter, cardId) {
+  #toggleLike(like, counter) {
     if (like.classList.contains('pics__like_active')) {
-      Api.deleteLike(cardId) // TODO Api weak link
+      this.#deleteLike(this.#id)
         .then(data => {
           like.classList.remove('pics__like_active');
           counter.textContent = data.likes.length;
         })
         .catch(console.log);
     } else {
-      Api.addLike(cardId) // TODO Api weak link
+      this.#addLike(this.#id)
         .then(data => {
           like.classList.add('pics__like_active');
           counter.textContent = data.likes.length;
@@ -48,7 +56,7 @@ export default class Card {
   }
 
   #deleteCard() {
-    storage.setItem('cardId', this.#_id);
+    storage.setItem('cardId', this.#id);
     openDeletePopup(); // TODO Modal weak link
   }
 
@@ -58,7 +66,7 @@ export default class Card {
     });
 
     picElementLike.addEventListener('click', () => {
-      this.#toggleLike(picElementLike, picElementLikeCounter, picElementPicture.dataset.id)
+      this.#toggleLike(picElementLike, picElementLikeCounter, this.#id)
     });
 
     picElementDelete.addEventListener('click', () => {
@@ -75,11 +83,11 @@ export default class Card {
 
     picElementPicture.src = this.#link;
     picElementPicture.alt = this.#name;
-    picElementPicture.dataset.id = this.#_id;
+    picElementPicture.dataset.id = this.#id;
     picElementLikeCounter.textContent = this.#likes.length;
     this.#element.querySelector('.pics__pic-name').textContent = this.#name;
 
-    if (this.#likes.find(item => item._id === storage.getItem('profileId'))) {
+    if (this.#likes.find(item => item.id === storage.getItem('profileId'))) {
       picElementLike.classList.add('pics__like_active')
     }
 

@@ -1,23 +1,9 @@
-import { openPopup } from "./utils.js";
-import { populateProfileForm } from "./forms.js";
+import { openPopup } from "./utils";
+import { populateProfileForm } from "./forms";
+import { popups } from "./constants";
 
-
-const profilePopupElement = document.querySelector('.popup_type_profile');
-const cardPopupElement = document.querySelector('.popup_type_card');
-const picturePopupElement = document.querySelector('.popup_type_picture');
-const avatarPopupElement = document.querySelector('.popup_type_avatar');
-const deletePopupElement = document.querySelector('.popup_type_delete');
-
-const popups = {
-  profilePopupElement,
-  cardPopupElement,
-  picturePopupElement,
-  avatarPopupElement,
-  deletePopupElement
-}
-
-const picturePopupPicture = picturePopupElement.querySelector('.popup__picture');
-const picturePopupCaption = picturePopupElement.querySelector('.popup__title');
+const picturePopupPicture = popups.picturePopupElement.querySelector('.popup__picture');
+const picturePopupCaption = popups.picturePopupElement.querySelector('.popup__title');
 
 const openBigPicture = card => {
   picturePopupPicture.src = card.src;
@@ -25,19 +11,18 @@ const openBigPicture = card => {
 
   picturePopupCaption.textContent = card.alt;
 
-  openPopup(picturePopupElement);
+  openPopup(popups.picturePopupElement);
 }
 
-const openDeletePopup = () => openPopup(deletePopupElement);
+const openDeletePopup = () => openPopup(popups.deletePopupElement);
 
 const openProfileEditPopup = () => {
   populateProfileForm();
 
-  openPopup(profilePopupElement);
+  openPopup(popups.profilePopupElement);
 }
 
 export {
-  popups,
   openBigPicture,
   openProfileEditPopup,
   openDeletePopup

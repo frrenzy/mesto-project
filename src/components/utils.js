@@ -1,8 +1,3 @@
-const profileName = document.querySelector('.profile__name');
-const profileDescription = document.querySelector('.profile__description');
-const profileAvatar = document.querySelector('.profile__pic');
-const avatarEditIcon = document.querySelector('.profile__edit-avatar');
-
 const setEscapeListener = evt => {
   if (evt.key === 'Escape') {
     closePopup(document.querySelector('.popup_opened'))
@@ -24,10 +19,6 @@ const toggleLoading = (form, isLoading, text='Сохранить') => {
 }
 
 export {
-  profileName,
-  profileDescription,
-  profileAvatar,
-  avatarEditIcon,
   closePopup,
   openPopup,
   toggleLoading

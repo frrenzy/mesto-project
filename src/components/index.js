@@ -1,10 +1,11 @@
 import { renderCard } from "./card";
+import { closePopup, openPopup, toggleLoading } from "./utils";
 import {
   profileName, profileDescription, profileAvatar, avatarEditIcon,
-  closePopup, openPopup, toggleLoading
-} from "./utils";
-import { popups, openProfileEditPopup } from "./modal";
-import { avatarFormElement, cardFormElement, profileFormElement, deleteFormElement } from "./forms";
+  avatarFormElement, cardFormElement, profileFormElement, deleteFormElement,
+  popups
+} from "./constants";
+import { openProfileEditPopup } from "./modal";
 import { enableValidation } from "./validate";
 import Api from "./Api";
 import { storage } from "./storage";

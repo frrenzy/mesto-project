@@ -1,10 +1,7 @@
 import { openBigPicture, openDeletePopup } from "./modal";
 import { storage } from "./storage";
+import { picsGrid, picTemplate } from "./constants"
 import Api from "./Api";
-
-
-const picsGrid = document.querySelector('.pics__grid');
-const picTemplate = document.querySelector('#pic-template').content;
 
 
 const toggleLike = (like, counter, cardId) => {

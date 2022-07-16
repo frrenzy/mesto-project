@@ -1,12 +1,7 @@
-import { profileDescription, profileName } from "./utils.js";
-
-const profileFormElement = document.forms.edit;
-const cardFormElement = document.forms.add;
-const avatarFormElement = document.forms.avatar;
-const deleteFormElement = document.forms.delete;
-
-const nameInputElement = profileFormElement.elements.name;
-const descriptionInputElement = profileFormElement.elements.description;
+import {
+  nameInputElement, descriptionInputElement,
+  profileDescription, profileName
+} from "./constants";
 
 
 const populateProfileForm = () => {
@@ -15,9 +10,5 @@ const populateProfileForm = () => {
 }
 
 export {
-  profileFormElement,
-  cardFormElement,
-  avatarFormElement,
-  deleteFormElement,
   populateProfileForm
 }

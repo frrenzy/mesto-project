@@ -7,7 +7,7 @@ import {
 } from "./constants";
 import { openProfileEditPopup } from "./modal";
 import { enableValidation } from "./validate";
-import Api from "./Api";
+import api from "./Api";
 import { storage } from "./storage";
 
 import '../pages/index.css';
@@ -16,7 +16,7 @@ import '../pages/index.css';
 const { cardPopupElement, profilePopupElement, avatarPopupElement, deletePopupElement } = popups;
 
 
-Promise.all([Api.getUser(), Api.getCards()])
+Promise.all([api.getUser(), api.getCards()])
   .then(([user, cards]) => {
     profileName.textContent = user.name;
     profileDescription.textContent = user.about;
@@ -24,7 +24,14 @@ Promise.all([Api.getUser(), Api.getCards()])
     storage.setItem('profileId', user._id);
 
     cards.reverse().forEach(cardData => {
-      const card = new Card(cardData, '#pic-template');
+      const card = new Card(
+        cardData,
+        {
+          addLike: id => api.addLike(id),
+          deleteLike: id => api.deleteLike(id)
+        },
+        '#pic-template'
+      );
       card.renderCard();
     });
   })
@@ -45,12 +52,19 @@ cardFormElement.addEventListener('submit', evt => {
   evt.preventDefault();
   toggleLoading(cardFormElement, true);
 
-  Api.addCard({
+  api.addCard({
     name: cardFormElement.elements.name.value,
     link: cardFormElement.elements.link.value
   })
     .then(cardData => {
-      const card = new Card(cardData, '#pic-template');
+      const card = new Card(
+        cardData,
+        {
+          addLike: api.addLike,
+          deleteLike: api.deleteLike
+        },
+        '#pic-template'
+      );
       card.renderCard();
       cardFormElement.reset();
 
@@ -66,7 +80,7 @@ profileFormElement.addEventListener('submit', evt => {
   evt.preventDefault();
   toggleLoading(profileFormElement, true);
 
-  Api.editProfile({
+  api.editProfile({
     name: profileFormElement.elements.name.value,
     about: profileFormElement.elements.description.value
   })
@@ -86,7 +100,7 @@ avatarFormElement.addEventListener('submit', evt => {
   evt.preventDefault();
   toggleLoading(avatarFormElement, true);
 
-  Api.editAvatar(avatarFormElement.elements.link.value)
+  api.editAvatar(avatarFormElement.elements.link.value)
     .then(data => {
       profileAvatar.src = data.avatar
 
@@ -104,7 +118,7 @@ deleteFormElement.addEventListener('submit', evt => {
 
   const cardId = storage.getItem('cardId');
 
-  Api.deleteCard(cardId)
+  api.deleteCard(cardId)
     .then(data => {
       document
         .querySelector(`.pics__pic[data-id="${cardId}"]`)

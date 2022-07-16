@@ -1,7 +1,7 @@
 import { openBigPicture, openDeletePopup } from "./modal";
 import { storage } from "./storage";
 import { picsGrid } from "./constants"
-import Api from "./Api";
+
 
 export default class Card {
   #selector
@@ -11,14 +11,18 @@ export default class Card {
   #likes
   #owner
   #element
+  #addLike
+  #deleteLike
 
-  constructor({ name, link, _id, likes, owner }, selector) {
+  constructor({ name, link, _id, likes, owner }, { addLike, deleteLike }, selector) {
     this.#link = link;
     this.#name = name;
     this.#selector = selector;
     this.#owner = owner;
     this.#_id = _id;
     this.#likes = likes;
+    this.#addLike = addLike;
+    this.#deleteLike = deleteLike;
   }
 
   #getElement() {
@@ -29,16 +33,16 @@ export default class Card {
       .cloneNode(true)
   }
 
-  #toggleLike(like, counter, cardId) {
+  #toggleLike(like, counter) {
     if (like.classList.contains('pics__like_active')) {
-      Api.deleteLike(cardId) // TODO Api weak link
+      this.#deleteLike(this.#_id)
         .then(data => {
           like.classList.remove('pics__like_active');
           counter.textContent = data.likes.length;
         })
         .catch(console.log);
     } else {
-      Api.addLike(cardId) // TODO Api weak link
+      this.#addLike(this.#_id)
         .then(data => {
           like.classList.add('pics__like_active');
           counter.textContent = data.likes.length;
@@ -58,7 +62,7 @@ export default class Card {
     });
 
     picElementLike.addEventListener('click', () => {
-      this.#toggleLike(picElementLike, picElementLikeCounter, picElementPicture.dataset.id)
+      this.#toggleLike(picElementLike, picElementLikeCounter, this.#_id)
     });
 
     picElementDelete.addEventListener('click', () => {

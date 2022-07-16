@@ -1,4 +1,4 @@
-import { renderCard } from "./card";
+import Card from "./Card";
 import { closePopup, openPopup, toggleLoading } from "./utils";
 import {
   profileName, profileDescription, profileAvatar, avatarEditIcon,
@@ -23,8 +23,9 @@ Promise.all([Api.getUser(), Api.getCards()])
     profileAvatar.src = user.avatar;
     storage.setItem('profileId', user._id);
 
-    cards.reverse().forEach(card => {
-      renderCard(card);
+    cards.reverse().forEach(cardData => {
+      const card = new Card(cardData, '#pic-template');
+      card.renderCard();
     });
   })
   .catch(console.log);
@@ -48,8 +49,9 @@ cardFormElement.addEventListener('submit', evt => {
     name: cardFormElement.elements.name.value,
     link: cardFormElement.elements.link.value
   })
-    .then(card => {
-      renderCard(card)
+    .then(cardData => {
+      const card = new Card(cardData, '#pic-template');
+      card.renderCard();
       cardFormElement.reset();
 
       closePopup(cardPopupElement);

@@ -1,6 +1,5 @@
 //Card
 export const picsGrid = document.querySelector('.pics__grid');
-export const picTemplate = document.querySelector('#pic-template').content;
 
 //utils
 export const profileName = document.querySelector('.profile__name');

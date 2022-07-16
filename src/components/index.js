@@ -6,7 +6,7 @@ import {
 import { popups, openProfileEditPopup } from "./modal";
 import { avatarFormElement, cardFormElement, profileFormElement, deleteFormElement } from "./forms";
 import { enableValidation } from "./validate";
-import { addCard, deleteCard, editAvatar, editProfile, getCards, getUser } from "./api";
+import Api from "./Api";
 import { storage } from "./storage";
 
 import '../pages/index.css';
@@ -15,7 +15,7 @@ import '../pages/index.css';
 const { cardPopupElement, profilePopupElement, avatarPopupElement, deletePopupElement } = popups;
 
 
-Promise.all([getUser(), getCards()])
+Promise.all([Api.getUser(), Api.getCards()])
   .then(([user, cards]) => {
     profileName.textContent = user.name;
     profileDescription.textContent = user.about;
@@ -43,7 +43,7 @@ cardFormElement.addEventListener('submit', evt => {
   evt.preventDefault();
   toggleLoading(cardFormElement, true);
 
-  addCard({
+  Api.addCard({
     name: cardFormElement.elements.name.value,
     link: cardFormElement.elements.link.value
   })
@@ -63,7 +63,7 @@ profileFormElement.addEventListener('submit', evt => {
   evt.preventDefault();
   toggleLoading(profileFormElement, true);
 
-  editProfile({
+  Api.editProfile({
     name: profileFormElement.elements.name.value,
     about: profileFormElement.elements.description.value
   })
@@ -83,7 +83,7 @@ avatarFormElement.addEventListener('submit', evt => {
   evt.preventDefault();
   toggleLoading(avatarFormElement, true);
 
-  editAvatar(avatarFormElement.elements.link.value)
+  Api.editAvatar(avatarFormElement.elements.link.value)
     .then(data => {
       profileAvatar.src = data.avatar
 
@@ -101,7 +101,7 @@ deleteFormElement.addEventListener('submit', evt => {
 
   const cardId = storage.getItem('cardId');
 
-  deleteCard(cardId)
+  Api.deleteCard(cardId)
     .then(data => {
       document
         .querySelector(`.pics__pic[data-id="${cardId}"]`)

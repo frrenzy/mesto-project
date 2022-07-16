@@ -1,6 +1,6 @@
-import { openBigPicture, openDeletePopup } from "./modal.js";
-import { storage } from "./storage.js";
-import { addLike, deleteLike } from "./api.js";
+import { openBigPicture, openDeletePopup } from "./modal";
+import { storage } from "./storage";
+import Api from "./Api";
 
 
 const picsGrid = document.querySelector('.pics__grid');
@@ -9,14 +9,14 @@ const picTemplate = document.querySelector('#pic-template').content;
 
 const toggleLike = (like, counter, cardId) => {
   if (like.classList.contains('pics__like_active')) {
-    deleteLike(cardId)
+    Api.deleteLike(cardId)
       .then(data => {
         like.classList.remove('pics__like_active');
         counter.textContent = data.likes.length;
       })
       .catch(console.log);
   } else {
-    addLike(cardId)
+    Api.addLike(cardId)
       .then(data => {
         like.classList.add('pics__like_active');
         counter.textContent = data.likes.length;

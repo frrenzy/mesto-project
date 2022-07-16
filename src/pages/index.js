@@ -1,16 +1,16 @@
-import Card from "./Card";
-import { closePopup, openPopup, toggleLoading } from "./utils";
+import Card from "../components/Card";
+import { closePopup, openPopup, toggleLoading } from "../components/utils";
 import {
   profileName, profileDescription, profileAvatar, avatarEditIcon,
   avatarFormElement, cardFormElement, profileFormElement, deleteFormElement,
   popups
-} from "./constants";
-import { openProfileEditPopup } from "./modal";
-import { enableValidation } from "./validate";
-import api from "./Api";
-import { storage } from "./storage";
+} from "../components/constants";
+import { openProfileEditPopup } from "../components/modal";
+import { enableValidation } from "../components/validate";
+import api from "../components/Api";
+import { storage } from "../components/storage";
 
-import '../pages/index.css';
+import './index.css';
 
 
 const { cardPopupElement, profilePopupElement, avatarPopupElement, deletePopupElement } = popups;

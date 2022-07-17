@@ -1,7 +1,3 @@
-import { openBigPicture, openDeletePopup } from "./modal";
-import { storage } from "./storage";
-
-
 export default class Card {
   #selector
   #name
@@ -12,10 +8,12 @@ export default class Card {
   #element
   #addLike
   #deleteLike
+  #openPopup
+  #deletePopup
 
   constructor(
     { name, link, _id, likes, owner },
-    { addLike, deleteLike },
+    { addLike, deleteLike, openPopup, deletePopup },
     selector
   ) {
     this.#link = link;
@@ -26,6 +24,8 @@ export default class Card {
     this.#likes = likes;
     this.#addLike = addLike;
     this.#deleteLike = deleteLike;
+    this.#openPopup = openPopup;
+    this.#deletePopup = deletePopup;
   }
 
   #getElement() {
@@ -55,13 +55,13 @@ export default class Card {
   }
 
   #deleteCard() {
-    storage.setItem('cardId', this.#id);
-    openDeletePopup(); // TODO Modal weak link
+    localStorage.setItem('cardId', this.#id);
+    this.#deletePopup();
   }
 
   #setEventListeners(picElementPicture, picElementDelete, picElementLikeCounter, picElementLike) {
     picElementPicture.addEventListener('click', () => {
-      openBigPicture(picElementPicture); // TODO Modal weak link
+      this.#openPopup(picElementPicture.src, picElementPicture.alt);
     });
 
     picElementLike.addEventListener('click', () => {
@@ -86,11 +86,11 @@ export default class Card {
     picElementLikeCounter.textContent = this.#likes.length;
     this.#element.querySelector('.pics__pic-name').textContent = this.#name;
 
-    if (this.#likes.find(item => item._id === storage.getItem('profileId'))) {
+    if (this.#likes.find(item => item._id === localStorage.getItem('profileId'))) {
       picElementLike.classList.add('pics__like_active')
     }
 
-    if (this.#owner._id !== storage.getItem('profileId')) {
+    if (this.#owner._id !== localStorage.getItem('profileId')) {
       picElementDelete.classList.add('pics__delete_hidden');
     }
 

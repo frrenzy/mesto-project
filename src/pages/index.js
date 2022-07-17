@@ -2,28 +2,113 @@ import Card from "../components/Card";
 import api from "../components/Api";
 import FormValidator from "../components/FormValidator";
 import Section from "../components/Section";
-import { closePopup, openPopup, toggleLoading } from "../components/utils";
+import PopupWithImage from "../components/PopupWithImage";
+import PopupWithForm from "../components/PopupWithForm";
 import {
-  profileName, profileDescription, profileAvatar, avatarEditIcon,
-  forms, popups
-} from "../components/constants";
-import { openProfileEditPopup } from "../components/modal";
-import { storage } from "../components/storage";
+  profileName, profileDescription, profileAvatar,
+  avatarEditIcon, profileEditButton, newCardButton
+} from "../utils/constants";
 
 import './index.css';
 
 
-const { cardPopupElement, profilePopupElement, avatarPopupElement, deletePopupElement } = popups;
-const { avatarFormElement, cardFormElement, profileFormElement, deleteFormElement } = forms;
-
 let cardsSection;
+
+const bigPicturePopup = new PopupWithImage('.popup_type_picture');
+bigPicturePopup.setEventListeners();
+
+const profilePopup = new PopupWithForm(
+  '.popup_type_profile',
+  formData => {
+    profilePopup.toggleLoading(true);
+
+    api.editProfile(formData)
+      .then(data => {
+        profileName.textContent = data.name;
+        profileDescription.textContent = data.about;
+      })
+      .catch(console.log)
+      .finally(() => {
+        profilePopup.toggleLoading(false)
+      })
+  },
+  () => {
+    return {
+      name: profileName.textContent,
+      about: profileDescription.textContent
+    }
+  }
+);
+profilePopup.setEventListeners();
+
+const avatarPopup = new PopupWithForm('.popup_type_avatar', formData => {
+  avatarPopup.toggleLoading(true);
+
+  api.editAvatar(formData)
+    .then(data => {
+      profileAvatar.src = data.avatar
+    })
+    .catch(console.log)
+    .finally(() => {
+      avatarPopup.toggleLoading(false)
+    })
+});
+avatarPopup.setEventListeners();
+
+const cardPopup = new PopupWithForm('.popup_type_card', formData => {
+  cardPopup.toggleLoading(true);
+
+  api.addCard(formData)
+    .then(cardData => {
+      const card = new Card(
+        cardData,
+        {
+          addLike: id => api.addLike(id),
+          deleteLike: id => api.deleteLike(id),
+          openPopup: (link, name) => bigPicturePopup.openPopup(link, name),
+          deletePopup: () => deletePopup.openPopup()
+        },
+        '#pic-template'
+      );
+      cardsSection.addItem(card.createCardMarkup());
+
+      cardPopup.closePopup();
+    })
+    .catch(console.log)
+    .finally(() => {
+      cardPopup.toggleLoading(false, 'Создать')
+    })
+});
+cardPopup.setEventListeners();
+
+const deletePopup = new PopupWithForm('.popup_type_delete', formData => {
+  deletePopup.toggleLoading(true);
+
+  const cardId = localStorage.getItem('cardId');
+
+  api.deleteCard(cardId)
+    .then(data => {
+      document
+        .querySelector(`.pics__pic[data-id="${cardId}"]`)
+        .closest('li')
+        .remove()
+
+      deletePopup.closePopup();
+    })
+    .catch(console.log)
+    .finally(() => {
+      deletePopup.toggleLoading(false, 'Да');
+    })
+});
+deletePopup.setEventListeners();
+
 
 Promise.all([api.getUser(), api.getCards()])
   .then(([user, cards]) => {
     profileName.textContent = user.name;
     profileDescription.textContent = user.about;
     profileAvatar.src = user.avatar;
-    storage.setItem('profileId', user._id);
+    localStorage.setItem('profileId', user._id);
 
     cardsSection = new Section(
       {
@@ -33,7 +118,9 @@ Promise.all([api.getUser(), api.getCards()])
             item,
             {
               addLike: id => api.addLike(id),
-              deleteLike: id => api.deleteLike(id)
+              deleteLike: id => api.deleteLike(id),
+              openPopup: (link, name) => bigPicturePopup.openPopup(link, name),
+              deletePopup: () => deletePopup.openPopup()
             },
             '#pic-template'
           );
@@ -46,103 +133,20 @@ Promise.all([api.getUser(), api.getCards()])
   .catch(console.log);
 
 
-document.querySelector('.profile__add').addEventListener('click', () => {
-  openPopup(cardPopupElement);
+newCardButton.addEventListener('click', () => {
+  cardPopup.openPopup();
 })
 
-document.querySelector('.profile__edit').addEventListener('click', openProfileEditPopup);
+profileEditButton.addEventListener('click', () => {
+  profilePopup.openPopup();
+});
 
 avatarEditIcon.addEventListener('click', () => {
-  openPopup(avatarPopupElement);
+  avatarPopup.openPopup();
 })
 
-cardFormElement.addEventListener('submit', () => {
-  toggleLoading(cardFormElement, true);
 
-  api.addCard({
-    name: cardFormElement.elements.name.value,
-    link: cardFormElement.elements.link.value
-  })
-    .then(cardData => {
-      const card = new Card(
-        cardData,
-        {
-          addLike: id => api.addLike(id),
-          deleteLike: id => api.deleteLike(id)
-        },
-        '#pic-template'
-      );
-      cardsSection.addItem(card.createCardMarkup());
-      cardFormElement.reset();
-
-      closePopup(cardPopupElement);
-    })
-    .catch(console.log)
-    .finally(() => {
-      toggleLoading(cardFormElement, false, 'Создать')
-    })
-});
-
-profileFormElement.addEventListener('submit', () => {
-  toggleLoading(profileFormElement, true);
-
-  api.editProfile({
-    name: profileFormElement.elements.name.value,
-    about: profileFormElement.elements.description.value
-  })
-    .then(data => {
-      profileName.textContent = data.name;
-      profileDescription.textContent = data.about;
-
-      closePopup(profilePopupElement);
-    })
-    .catch(console.log)
-    .finally(() => {
-      toggleLoading(profileFormElement, false)
-    })
-});
-
-avatarFormElement.addEventListener('submit', () => {
-  toggleLoading(avatarFormElement, true);
-
-  api.editAvatar(avatarFormElement.elements.link.value)
-    .then(data => {
-      profileAvatar.src = data.avatar
-
-      closePopup(avatarPopupElement);
-    })
-    .catch(console.log)
-    .finally(() => {
-      toggleLoading(avatarFormElement, false)
-    })
-});
-
-deleteFormElement.addEventListener('submit', () => {
-  toggleLoading(deleteFormElement, true);
-
-  const cardId = storage.getItem('cardId');
-
-  api.deleteCard(cardId)
-    .then(data => {
-      document
-        .querySelector(`.pics__pic[data-id="${cardId}"]`)
-        .closest('li')
-        .remove()
-
-      closePopup(deletePopupElement);
-    })
-    .catch(console.log)
-    .finally(() => {
-      toggleLoading(deleteFormElement, false, 'Да');
-    })
-})
-
-Array.from(Object.values(popups)).forEach(popup => {
-
-});
-
-
-Array.from(Object.values(forms)).forEach(formElement => {
+Array.from(Object.values(document.forms)).forEach(formElement => {
   const formValidator = new FormValidator({
     inputSelector: '.popup__input',
     submitButtonSelector: '.popup__submit',

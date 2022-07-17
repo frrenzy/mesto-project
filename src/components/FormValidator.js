@@ -57,7 +57,7 @@ export default class FormValidator {
 
     this.#toggleButtonState(inputList, buttonElement);
 
-    this.#formElement.addEventListener('submit', () => {
+    this.#formElement.addEventListener('reset', () => {
       this.#toggleButtonState(inputList, buttonElement);
     });
 

@@ -8,10 +8,16 @@ export const profileAvatar = document.querySelector('.profile__pic');
 export const avatarEditIcon = document.querySelector('.profile__edit-avatar');
 
 //forms
-export const profileFormElement = document.forms.edit;
-export const cardFormElement = document.forms.add;
-export const avatarFormElement = document.forms.avatar;
-export const deleteFormElement = document.forms.delete;
+const profileFormElement = document.forms.edit;
+const cardFormElement = document.forms.add;
+const avatarFormElement = document.forms.avatar;
+const deleteFormElement = document.forms.delete;
+export const forms = {
+  profileFormElement,
+  cardFormElement,
+  avatarFormElement,
+  deleteFormElement
+}
 
 export const nameInputElement = profileFormElement.elements.name;
 export const descriptionInputElement = profileFormElement.elements.description;

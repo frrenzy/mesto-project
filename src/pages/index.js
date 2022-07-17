@@ -1,19 +1,19 @@
 import Card from "../components/Card";
+import api from "../components/Api";
+import FormValidator from "../components/FormValidator";
 import { closePopup, openPopup, toggleLoading } from "../components/utils";
 import {
   profileName, profileDescription, profileAvatar, avatarEditIcon,
-  avatarFormElement, cardFormElement, profileFormElement, deleteFormElement,
-  popups
+  forms, popups
 } from "../components/constants";
 import { openProfileEditPopup } from "../components/modal";
-import { enableValidation } from "../components/validate";
-import api from "../components/Api";
 import { storage } from "../components/storage";
 
 import './index.css';
 
 
 const { cardPopupElement, profilePopupElement, avatarPopupElement, deletePopupElement } = popups;
+const { avatarFormElement, cardFormElement, profileFormElement, deleteFormElement } = forms;
 
 
 Promise.all([api.getUser(), api.getCards()])
@@ -48,8 +48,7 @@ avatarEditIcon.addEventListener('click', () => {
   openPopup(avatarPopupElement);
 })
 
-cardFormElement.addEventListener('submit', evt => {
-  evt.preventDefault();
+cardFormElement.addEventListener('submit', () => {
   toggleLoading(cardFormElement, true);
 
   api.addCard({
@@ -76,8 +75,7 @@ cardFormElement.addEventListener('submit', evt => {
     })
 });
 
-profileFormElement.addEventListener('submit', evt => {
-  evt.preventDefault();
+profileFormElement.addEventListener('submit', () => {
   toggleLoading(profileFormElement, true);
 
   api.editProfile({
@@ -96,8 +94,7 @@ profileFormElement.addEventListener('submit', evt => {
     })
 });
 
-avatarFormElement.addEventListener('submit', evt => {
-  evt.preventDefault();
+avatarFormElement.addEventListener('submit', () => {
   toggleLoading(avatarFormElement, true);
 
   api.editAvatar(avatarFormElement.elements.link.value)
@@ -112,8 +109,7 @@ avatarFormElement.addEventListener('submit', evt => {
     })
 });
 
-deleteFormElement.addEventListener('submit', evt => {
-  evt.preventDefault();
+deleteFormElement.addEventListener('submit', () => {
   toggleLoading(deleteFormElement, true);
 
   const cardId = storage.getItem('cardId');
@@ -144,11 +140,23 @@ Array.from(Object.values(popups)).forEach(popup => {
   })
 });
 
-enableValidation({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__submit',
-  inactiveButtonClass: 'popup__submit_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
+
+Array.from(Object.values(forms)).forEach(formElement => {
+  const formValidator = new FormValidator({
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__submit',
+    inactiveButtonClass: 'popup__submit_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__error_visible'
+  }, formElement);
+  formValidator.enableValidation();
 });
+
+// enableValidation({
+//   formSelector: '.popup__form',
+//   inputSelector: '.popup__input',
+//   submitButtonSelector: '.popup__submit',
+//   inactiveButtonClass: 'popup__submit_disabled',
+//   inputErrorClass: 'popup__input_type_error',
+//   errorClass: 'popup__error_visible'
+// });

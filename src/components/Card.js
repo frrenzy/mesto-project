@@ -1,6 +1,5 @@
 import { openBigPicture, openDeletePopup } from "./modal";
 import { storage } from "./storage";
-import { picsGrid } from "./constants"
 
 
 export default class Card {
@@ -74,7 +73,7 @@ export default class Card {
     });
   }
 
-  #createCard() {
+  createCardMarkup() {
     this.#element = this.#getElement();
     const picElementPicture = this.#element.querySelector('.pics__pic');
     const picElementDelete = this.#element.querySelector('.pics__delete');
@@ -98,10 +97,5 @@ export default class Card {
     this.#setEventListeners(picElementPicture, picElementDelete, picElementLikeCounter, picElementLike);
 
     return this.#element;
-  }
-
-  renderCard() {
-    const picElement = this.#createCard();
-    picsGrid.prepend(picElement); // TODO move to section
   }
 }

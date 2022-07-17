@@ -23,17 +23,23 @@ Promise.all([api.getUser(), api.getCards()])
     profileAvatar.src = user.avatar;
     storage.setItem('profileId', user._id);
 
-    cards.reverse().forEach(cardData => {
-      const card = new Card(
-        cardData,
-        {
-          addLike: id => api.addLike(id),
-          deleteLike: id => api.deleteLike(id)
-        },
-        '#pic-template'
-      );
-      card.renderCard();
-    });
+    cardsSection = new Section(
+      {
+        items: cards.reverse(),
+        renderer: item => {
+          const card = new Card(
+            item,
+            {
+              addLike: id => api.addLike(id),
+              deleteLike: id => api.deleteLike(id)
+            },
+            '#pic-template'
+          );
+          return card.createCardMarkup()
+        }
+      }, '.pics__grid'
+    );
+    cardsSection.render()
   })
   .catch(console.log);
 

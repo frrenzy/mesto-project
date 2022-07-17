@@ -138,14 +138,7 @@ deleteFormElement.addEventListener('submit', () => {
 })
 
 Array.from(Object.values(popups)).forEach(popup => {
-  popup.addEventListener('mousedown', evt => {
-    if (evt.target.classList.contains('popup_opened')) {
-      closePopup(popup)
-    }
-    if (evt.target.classList.contains('popup__close')) {
-      closePopup(popup)
-    }
-  })
+
 });
 
 
@@ -159,12 +152,3 @@ Array.from(Object.values(forms)).forEach(formElement => {
   }, formElement);
   formValidator.enableValidation();
 });
-
-// enableValidation({
-//   formSelector: '.popup__form',
-//   inputSelector: '.popup__input',
-//   submitButtonSelector: '.popup__submit',
-//   inactiveButtonClass: 'popup__submit_disabled',
-//   inputErrorClass: 'popup__input_type_error',
-//   errorClass: 'popup__error_visible'
-// });

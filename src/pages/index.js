@@ -1,6 +1,7 @@
 import Card from "../components/Card";
 import api from "../components/Api";
 import FormValidator from "../components/FormValidator";
+import Section from "../components/Section";
 import { closePopup, openPopup, toggleLoading } from "../components/utils";
 import {
   profileName, profileDescription, profileAvatar, avatarEditIcon,
@@ -15,6 +16,7 @@ import './index.css';
 const { cardPopupElement, profilePopupElement, avatarPopupElement, deletePopupElement } = popups;
 const { avatarFormElement, cardFormElement, profileFormElement, deleteFormElement } = forms;
 
+let cardsSection;
 
 Promise.all([api.getUser(), api.getCards()])
   .then(([user, cards]) => {
@@ -23,17 +25,23 @@ Promise.all([api.getUser(), api.getCards()])
     profileAvatar.src = user.avatar;
     storage.setItem('profileId', user._id);
 
-    cards.reverse().forEach(cardData => {
-      const card = new Card(
-        cardData,
-        {
-          addLike: id => api.addLike(id),
-          deleteLike: id => api.deleteLike(id)
-        },
-        '#pic-template'
-      );
-      card.renderCard();
-    });
+    cardsSection = new Section(
+      {
+        items: cards.reverse(),
+        renderer: item => {
+          const card = new Card(
+            item,
+            {
+              addLike: id => api.addLike(id),
+              deleteLike: id => api.deleteLike(id)
+            },
+            '#pic-template'
+          );
+          return card.createCardMarkup()
+        }
+      }, '.pics__grid'
+    );
+    cardsSection.render()
   })
   .catch(console.log);
 
@@ -64,7 +72,7 @@ cardFormElement.addEventListener('submit', () => {
         },
         '#pic-template'
       );
-      card.renderCard();
+      cardsSection.addItem(card.createCardMarkup());
       cardFormElement.reset();
 
       closePopup(cardPopupElement);

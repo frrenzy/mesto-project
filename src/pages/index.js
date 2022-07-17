@@ -4,6 +4,7 @@ import FormValidator from "../components/FormValidator";
 import Section from "../components/Section";
 import PopupWithImage from "../components/PopupWithImage";
 import PopupWithForm from "../components/PopupWithForm";
+import UserInfo from "../components/UserInfo";
 import {
   profileName, profileDescription, profileAvatar,
   avatarEditIcon, profileEditButton, newCardButton
@@ -13,7 +14,12 @@ import './index.css';
 
 
 let cardsSection;
-
+const userInfo = new UserInfo({
+  nameSelector: '.profile__name',
+  aboutSelector: '.profile__description',
+  getCallback: () => api.getUser(),
+  setCallback: info => api.editProfile(info)
+})
 const bigPicturePopup = new PopupWithImage('.popup_type_picture');
 bigPicturePopup.setEventListeners();
 
@@ -22,11 +28,7 @@ const profilePopup = new PopupWithForm(
   formData => {
     profilePopup.toggleLoading(true);
 
-    api.editProfile(formData)
-      .then(data => {
-        profileName.textContent = data.name;
-        profileDescription.textContent = data.about;
-      })
+    userInfo.setUserInfo(formData)
       .catch(console.log)
       .finally(() => {
         profilePopup.toggleLoading(false)
@@ -103,7 +105,7 @@ const deletePopup = new PopupWithForm('.popup_type_delete', formData => {
 deletePopup.setEventListeners();
 
 
-Promise.all([api.getUser(), api.getCards()])
+Promise.all([userInfo.getUserInfo(), api.getCards()])
   .then(([user, cards]) => {
     profileName.textContent = user.name;
     profileDescription.textContent = user.about;

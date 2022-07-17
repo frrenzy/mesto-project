@@ -7,4 +7,15 @@ export default class Section {
     this.#renderer = renderer;
     this.#selector = document.querySelector(selector)
   }
+
+  addItem(element) {
+    this.#container.prepend(element)
+  }
+
+  render() {
+    this.#items.forEach(item => {
+      const element = this.#renderer(item);
+      this.addItem(element)
+    })
+  }
 }

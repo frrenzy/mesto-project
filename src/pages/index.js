@@ -4,6 +4,7 @@ import FormValidator from "../components/FormValidator";
 import Section from "../components/Section";
 import PopupWithImage from "../components/PopupWithImage";
 import PopupWithForm from "../components/PopupWithForm";
+import UserInfo from "../components/UserInfo";
 import {
   profileName, profileDescription, profileAvatar,
   avatarEditIcon, profileEditButton, newCardButton
@@ -13,6 +14,42 @@ import './index.css';
 
 
 let cardsSection;
+const userInfo = new UserInfo({
+  nameSelector: '.profile__name',
+  aboutSelector: '.profile__description',
+  getCallback: () => api.getUser(),
+  setCallback: info => api.editProfile(info)
+})
+
+Promise.all([userInfo.getUserInfo(), api.getCards()])
+  .then(([user, cards]) => {
+    profileName.textContent = user.name;
+    profileDescription.textContent = user.about;
+    profileAvatar.src = user.avatar;
+    localStorage.setItem('profileId', user._id);
+
+    cardsSection = new Section(
+      {
+        items: cards.reverse(),
+        renderer: item => {
+          const card = new Card(
+            item,
+            {
+              addLike: id => api.addLike(id),
+              deleteLike: id => api.deleteLike(id),
+              openPopup: (link, name) => bigPicturePopup.openPopup(link, name),
+              deletePopup: () => deletePopup.openPopup()
+            },
+            '#pic-template'
+          );
+          return card.createCardMarkup()
+        }
+      }, '.pics__grid'
+    );
+    cardsSection.render()
+  })
+  .catch(console.log);
+
 
 const bigPicturePopup = new PopupWithImage('.popup_type_picture');
 bigPicturePopup.setEventListeners();
@@ -22,11 +59,7 @@ const profilePopup = new PopupWithForm(
   formData => {
     profilePopup.toggleLoading(true);
 
-    api.editProfile(formData)
-      .then(data => {
-        profileName.textContent = data.name;
-        profileDescription.textContent = data.about;
-      })
+    userInfo.setUserInfo(formData)
       .catch(console.log)
       .finally(() => {
         profilePopup.toggleLoading(false)
@@ -83,7 +116,6 @@ cardPopup.setEventListeners();
 
 const deletePopup = new PopupWithForm('.popup_type_delete', formData => {
   deletePopup.toggleLoading(true);
-
   const cardId = localStorage.getItem('cardId');
 
   api.deleteCard(cardId)
@@ -101,36 +133,6 @@ const deletePopup = new PopupWithForm('.popup_type_delete', formData => {
     })
 });
 deletePopup.setEventListeners();
-
-
-Promise.all([api.getUser(), api.getCards()])
-  .then(([user, cards]) => {
-    profileName.textContent = user.name;
-    profileDescription.textContent = user.about;
-    profileAvatar.src = user.avatar;
-    localStorage.setItem('profileId', user._id);
-
-    cardsSection = new Section(
-      {
-        items: cards.reverse(),
-        renderer: item => {
-          const card = new Card(
-            item,
-            {
-              addLike: id => api.addLike(id),
-              deleteLike: id => api.deleteLike(id),
-              openPopup: (link, name) => bigPicturePopup.openPopup(link, name),
-              deletePopup: () => deletePopup.openPopup()
-            },
-            '#pic-template'
-          );
-          return card.createCardMarkup()
-        }
-      }, '.pics__grid'
-    );
-    cardsSection.render()
-  })
-  .catch(console.log);
 
 
 newCardButton.addEventListener('click', () => {

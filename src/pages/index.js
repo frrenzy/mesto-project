@@ -17,8 +17,10 @@ let cardsSection;
 const userInfo = new UserInfo({
   nameSelector: '.profile__name',
   aboutSelector: '.profile__description',
+  avatarSelector: '.profile__pic',
   getCallback: () => api.getUser(),
-  setCallback: info => api.editProfile(info)
+  setProfileCallback: info => api.editProfile(info),
+  setAvatarCallback: avatar => api.editAvatar(avatar)
 })
 
 Promise.all([userInfo.getUserInfo(), api.getCards()])
@@ -81,9 +83,8 @@ profilePopup.setEventListeners();
 const avatarPopup = new PopupWithForm('.popup_type_avatar', formData => {
   avatarPopup.toggleLoading(true);
 
-  api.editAvatar(formData)
+  userInfo.setAvatar(formData)
     .then(data => {
-      profileAvatar.src = data.avatar;
       avatarPopup.reset();
       avatarPopup.closePopup();
     })

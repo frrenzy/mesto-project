@@ -5,17 +5,21 @@ export default class PopupWithForm extends Popup {
   #submitter
   #form
   #init
+  #submitButton
+  #inputs
 
   constructor(selector, submitCallback, init = () => {}) {
     super(selector);
     this.#submitter = submitCallback;
     this.#form = this._popup.querySelector('.popup__form')
     this.#init = init;
+    this.#submitButton = this.#form.querySelector('.popup__submit');
+    this.#inputs = this.#form.querySelectorAll('.popup__input')
   }
 
   #getInputValues() {
     const values = {};
-    this.#form.querySelectorAll('.popup__input')?.forEach(input => {
+    this.#inputs?.forEach(input => {
       values[input.name] = input.value
     });
     return values;
@@ -25,7 +29,6 @@ export default class PopupWithForm extends Popup {
     super.setEventListeners();
     this.#form.addEventListener('submit', () => {
       this.#submitter(this.#getInputValues());
-      this.closePopup();
     })
   }
 
@@ -41,13 +44,15 @@ export default class PopupWithForm extends Popup {
 
   closePopup() {
     super.closePopup();
+  }
+
+  reset() {
     this.#form.reset();
   }
 
   toggleLoading = (isLoading, text='Сохранить') => {
     this
-      .#form
-      .querySelector('.popup__submit')
+      .#submitButton
       .textContent = isLoading ? 'Сохранение...' : text;
   }
 }

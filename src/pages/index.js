@@ -60,6 +60,10 @@ const profilePopup = new PopupWithForm(
     profilePopup.toggleLoading(true);
 
     userInfo.setUserInfo(formData)
+      .then(() => {
+        profilePopup.closePopup();
+        profilePopup.reset()
+      })
       .catch(console.log)
       .finally(() => {
         profilePopup.toggleLoading(false)
@@ -79,7 +83,9 @@ const avatarPopup = new PopupWithForm('.popup_type_avatar', formData => {
 
   api.editAvatar(formData)
     .then(data => {
-      profileAvatar.src = data.avatar
+      profileAvatar.src = data.avatar;
+      avatarPopup.reset();
+      avatarPopup.closePopup();
     })
     .catch(console.log)
     .finally(() => {
@@ -106,6 +112,7 @@ const cardPopup = new PopupWithForm('.popup_type_card', formData => {
       cardsSection.addItem(card.createCardMarkup());
 
       cardPopup.closePopup();
+      cardPopup.reset();
     })
     .catch(console.log)
     .finally(() => {

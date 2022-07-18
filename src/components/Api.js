@@ -7,7 +7,7 @@ class Api {
     this.#headers = headers;
   }
 
-  #onFulfilled(res) {
+  static #onFulfilled(res) {
     if (res.ok) {
       return res.json()
     }
@@ -19,7 +19,7 @@ class Api {
     return fetch(`${this.#baseUrl}/users/me`, {
       headers: this.#headers
     })
-      .then(this.#onFulfilled)
+      .then(Api.#onFulfilled)
   }
 
 
@@ -27,7 +27,7 @@ class Api {
     return fetch(`${this.#baseUrl}/cards`, {
       headers: this.#headers
     })
-      .then(this.#onFulfilled)
+      .then(Api.#onFulfilled)
   }
 
 
@@ -37,7 +37,7 @@ class Api {
       body: JSON.stringify(info),
       headers: this.#headers
     })
-      .then(this.#onFulfilled)
+      .then(Api.#onFulfilled)
   }
 
 
@@ -47,7 +47,7 @@ class Api {
       body: JSON.stringify(card),
       headers: this.#headers
     })
-      .then(this.#onFulfilled)
+      .then(Api.#onFulfilled)
   }
 
 
@@ -56,7 +56,7 @@ class Api {
       method: 'DELETE',
       headers: this.#headers
     })
-      .then(this.#onFulfilled)
+      .then(Api.#onFulfilled)
   }
 
 
@@ -65,7 +65,7 @@ class Api {
       method: 'PUT',
       headers: this.#headers
     })
-      .then(this.#onFulfilled)
+      .then(Api.#onFulfilled)
   }
 
 
@@ -74,7 +74,7 @@ class Api {
       method: 'DELETE',
       headers: this.#headers
     })
-      .then(this.#onFulfilled)
+      .then(Api.#onFulfilled)
   }
 
 
@@ -84,7 +84,7 @@ class Api {
       body: JSON.stringify(avatar),
       headers: this.#headers
     })
-      .then(this.#onFulfilled)
+      .then(Api.#onFulfilled)
   }
 }
 

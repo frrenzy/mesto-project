@@ -7,14 +7,14 @@ export default class FormValidator {
     this.#formElement = formElement;
   }
 
-  #hasInvalidInput(inputList) {
+  static #hasInvalidInput(inputList) {
     return inputList.some(inputElement => {
       return !inputElement.validity.valid;
     });
   }
 
   #toggleButtonState(inputList, buttonElement) {
-    if (this.#hasInvalidInput(inputList)) {
+    if (FormValidator.#hasInvalidInput(inputList)) {
       buttonElement.classList.add(this.#config.inactiveButtonClass);
       buttonElement.setAttribute('disabled', '');
     } else {

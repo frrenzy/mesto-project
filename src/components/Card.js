@@ -10,11 +10,12 @@ export default class Card {
   #deleteLike
   #openPopup
   #deletePopup
+  #userId
 
   constructor(
     { name, link, _id, likes, owner },
     { addLike, deleteLike, openPopup, deletePopup },
-    selector
+    selector, userId
   ) {
     this.#link = link;
     this.#name = name;
@@ -26,6 +27,7 @@ export default class Card {
     this.#deleteLike = deleteLike;
     this.#openPopup = openPopup;
     this.#deletePopup = deletePopup;
+    this.#userId = userId;
   }
 
   #getElement() {
@@ -86,11 +88,11 @@ export default class Card {
     picElementLikeCounter.textContent = this.#likes.length;
     this.#element.querySelector('.pics__pic-name').textContent = this.#name;
 
-    if (this.#likes.find(item => item._id === localStorage.getItem('profileId'))) {
+    if (this.#likes.find(item => item._id === this.#userId)) {
       picElementLike.classList.add('pics__like_active')
     }
 
-    if (this.#owner._id !== localStorage.getItem('profileId')) {
+    if (this.#owner._id !== this.#userId) {
       picElementDelete.classList.add('pics__delete_hidden');
     }
 

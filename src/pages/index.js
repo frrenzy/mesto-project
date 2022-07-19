@@ -5,10 +5,7 @@ import Section from "../components/Section";
 import PopupWithImage from "../components/PopupWithImage";
 import PopupWithForm from "../components/PopupWithForm";
 import UserInfo from "../components/UserInfo";
-import {
-  profileName, profileDescription, profileAvatar,
-  avatarEditIcon, profileEditButton, newCardButton
-} from "../utils/constants";
+import { avatarEditIcon, profileEditButton, newCardButton } from "../utils/constants";
 
 import './index.css';
 
@@ -25,10 +22,7 @@ const userInfo = new UserInfo({
 
 Promise.all([userInfo.getUserInfo(), api.getCards()])
   .then(([user, cards]) => {
-    profileName.textContent = user.name;
-    profileDescription.textContent = user.about;
-    profileAvatar.src = user.avatar;
-    localStorage.setItem('profileId', user._id);
+    userInfo.render(user);
 
     cardsSection = new Section(
       {
@@ -42,7 +36,8 @@ Promise.all([userInfo.getUserInfo(), api.getCards()])
               openPopup: (link, name) => bigPicturePopup.openPopup(link, name),
               deletePopup: () => deletePopup.openPopup()
             },
-            '#pic-template'
+            '#pic-template',
+            userInfo.getId()
           );
           return card.createCardMarkup()
         }
@@ -61,7 +56,7 @@ const profilePopup = new PopupWithForm(
   formData => {
     profilePopup.toggleLoading(true);
 
-    userInfo.setUserInfo(formData)
+    userInfo.updateUserInfo(formData)
       .then(() => {
         profilePopup.closePopup();
         profilePopup.reset()
@@ -71,19 +66,14 @@ const profilePopup = new PopupWithForm(
         profilePopup.toggleLoading(false)
       })
   },
-  () => {
-    return {
-      name: profileName.textContent,
-      about: profileDescription.textContent
-    }
-  }
+  () => userInfo.getFormValues()
 );
 profilePopup.setEventListeners();
 
 const avatarPopup = new PopupWithForm('.popup_type_avatar', formData => {
   avatarPopup.toggleLoading(true);
 
-  userInfo.setAvatar(formData)
+  userInfo.updateAvatar(formData)
     .then(data => {
       avatarPopup.reset();
       avatarPopup.closePopup();

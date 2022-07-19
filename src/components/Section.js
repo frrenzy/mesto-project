@@ -9,14 +9,18 @@ export default class Section {
     this.#container = document.querySelector(selector)
   }
 
-  addItem(element) {
+  renderItem(element) {
     this.#container.prepend(element)
   }
 
-  render() {
+  renderAll() {
     this.#items.forEach(item => {
-      const element = this.#renderer(item);
-      this.addItem(element)
+      const element = this.createItemMarkup(item);
+      this.renderItem(element)
     })
+  }
+
+  createItemMarkup(item) {
+    return this.#renderer(item)
   }
 }

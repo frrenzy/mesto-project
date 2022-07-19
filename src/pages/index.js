@@ -48,7 +48,7 @@ Promise.all([userInfo.getUserInfo(), api.getCards()])
         }
       }, '.pics__grid'
     );
-    cardsSection.render()
+    cardsSection.renderAll()
   })
   .catch(console.log);
 
@@ -100,17 +100,8 @@ const cardPopup = new PopupWithForm('.popup_type_card', formData => {
 
   api.addCard(formData)
     .then(cardData => {
-      const card = new Card(
-        cardData,
-        {
-          addLike: id => api.addLike(id),
-          deleteLike: id => api.deleteLike(id),
-          openPopup: (link, name) => bigPicturePopup.openPopup(link, name),
-          deletePopup: () => deletePopup.openPopup()
-        },
-        '#pic-template'
-      );
-      cardsSection.addItem(card.createCardMarkup());
+      const card = cardsSection.createItemMarkup(cardData);
+      cardsSection.renderItem(card);
 
       cardPopup.closePopup();
       cardPopup.reset();

@@ -1,6 +1,6 @@
-import { openBigPicture, openDeletePopup } from "./modal.js";
-import { storage } from "./storage.js";
-import { addLike, deleteLike } from "./api.js";
+import { openBigPicture, openDeletePopup } from "./modal";
+import { storage } from "./storage";
+import { addLike, deleteLike } from "./api";
 
 
 const picsGrid = document.querySelector('.pics__grid');

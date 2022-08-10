@@ -110,8 +110,7 @@ const deletePopup = new PopupWithForm('.popup_type_delete', formData => {
   api.deleteCard(cardId)
     .then(data => {
       document
-        .querySelector(`.pics__pic[data-id="${cardId}"]`)
-        .closest('li')
+        .querySelector(`#_${cardId}`)
         .remove()
 
       deletePopup.closePopup();

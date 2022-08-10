@@ -82,9 +82,9 @@ export default class Card {
     const picElementLike = this.#element.querySelector('.pics__like');
     const picElementLikeCounter = this.#element.querySelector('.pics__like-counter');
 
+    this.#element.id = `_${this.#id}`;
     picElementPicture.src = this.#link;
     picElementPicture.alt = this.#name;
-    picElementPicture.dataset.id = this.#id;
     picElementLikeCounter.textContent = this.#likes.length;
     this.#element.querySelector('.pics__pic-name').textContent = this.#name;
 
